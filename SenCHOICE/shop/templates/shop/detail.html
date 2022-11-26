@@ -1,0 +1,178 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+
+<!-- detail page  -->
+<section class="text-gray-700 body-font overflow-hidden bg-white">
+    <div class="container px-5 py-14 mx-auto">
+        <div class="lg:w-4/5 mx-auto flex flex-wrap">
+            <img alt="ecommerce" class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
+                src="{{ products.image.url }}">
+            <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                <h2 class="text-sm title-font text-gray-500 tracking-widest">Senchoice</h2>
+                <h1 class="text-gray-900 text-3xl title-font font-medium mb-1" id="aa{{ products.id }}">{{ products.title }}</h1>
+                
+                <p class="leading-relaxed">{% lorem %}.</p>
+                <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
+                    <div class="flex">
+                        <span class="mr-3">Stock</span>
+                        <button class="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none">5</button>
+                    </div>
+                    <div class="flex ml-6 items-center">
+                        <span class="mr-3">Size</span>
+                        <div class="relative">
+                            <select
+                                class="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-red-500 text-base pl-3 pr-10">
+                                <option>1g</option>
+                                <option>5g</option>
+                                <option>10g</option>
+                                <option>1kg</option>
+                            </select>
+                            <span
+                                class="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" class="w-4 h-4" viewBox="0 0 24 24">
+                                    <path d="M6 9l6 6 6-6"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex">
+                    <span class="title-font font-medium text-2xl text-gray-900" id="price{{ products.id }}">{{ products.price }} Cfa</span>
+                    <button  
+                        class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
+                       
+                        <a  href="" id="{{products.id}}" class="ajouter">Ajouter</a>
+                        <!-- add-to-cart/{{product.id}} -->
+                        </button>
+                    <button
+                        class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+                        <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            class="w-5 h-5" viewBox="0 0 24 24">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container mt-10 mb-20 pb-10 mx-auto">
+    <div>
+        <h4 class="text-2xl font-bold border-b-4 border-black-500">
+            Produits du même Categorie
+        </h4>
+
+    </div>
+    {% comment %} list products {% endcomment %}
+    <div
+        class="grid lg:grid-cols-5 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-1 space-x-1 md:grid-cols-3 md:mx-auto sm:grid-cols-3 justify-center mx-auto">
+        {% for product in product %}
+
+        <div
+            class="text-center lg:w-56 w-32 md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105    hover:drop-shadow-2xl">
+            <a href="detail/{{product.id}}">
+                <div
+                    class="w-full h-full bg-white content-center shadow-md rounded-lg max-w-sm bg-light dark:border-gray-700">
+                    <a href="detail/{{product.id}}">
+                        <img class="rounded-t-lg p-8 lg:w-56 lg:h-56 md:w-56 md:h-56 sm:w-56 xs:w-32 xs:h-32"
+                            src="{{product.image.url}}" alt="product image" />
+                    </a>
+                    <div class="px-5 pb-5">
+                        <a href="detail/{{product.id}}">
+                            <h3 id="aa{{ product.id }}"
+                                class="text-gray-900 font-semibold lg:text-lg text-sm tracking-tight text-dark truncate">
+                                {{product.title}}
+                            </h3>
+                        </a>
+                        <div class="flex items-center mt-2.5 mb-5">
+                            <p class="text-xs truncate">{{ product.category }}</p>
+
+                        </div>
+
+                        <div class="flex items-center justify-between ">
+                            <span id="price{{ product.id }}"
+                                class="lg:text-xl text-sm font-bold text-gray-900 text-dark">{{product.price}} </span>
+                            <h6 class="flex">CFA</h6>
+                        </div>
+                        <div class="flex  justify-between espace-x-2">
+
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {%endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script class="text/javascript">
+    if (localStorage.getItem('panier') == null) {
+        var panier = {};
+    }
+    else {
+        panier = JSON.parse(localStorage.getItem('panier'));
+    }
+    $(document).on('click', '.ajouter',
+        function () {
+            console.log('ajouter au panier');
+            var item_id = this.id.toString();
+            console.log(item_id);
+            if (panier[item_id] != undefined) {
+                quantite = panier[item_id][0] + 1;
+                panier[item_id][0] = quantite;
+                panier[item_id][2] += parseFloat(document.getElementById("price" + item_id).innerHTML);
+
+
+
+
+
+
+
+
+            }
+            else {
+                quantite = 1;
+                name = document.getElementById("aa" + item_id).innerHTML;
+                prix = parseFloat(document.getElementById("price" + item_id).innerHTML);
+                panier[item_id] = [quantite, name, prix];
+
+
+
+            }
+            console.log(panier);
+            localStorage.setItem('panier', JSON.stringify(panier));
+            window.location.reload();
+
+        });
+    function afficherList(panier) {
+
+        var panierString = "";
+        panierString += '<div class=" w-3/4  overflow-y-auto"><div class="flex flex-row  justify-between items-center">';
+        var index = 1;
+        for (var x in panier) {
+            panierString += '<div class="flex flex-row  items-center"><span class="ml-4 font-semibold text-sm truncate">' + "N°"
+                + index + "- ";
+            panierString += document.getElementById("aa" + x).innerHTML + '<div class="w-32 flex justify-between"><span class="px-3 py-1 rounded-md bg-gray-300 " > -</span><span class="font-semibold mx-4 ">' + panier[x][0] + '</span><span class="px-3 py-1 rounded-md bg-gray-300 ">+</span></div ><div class="font-semibold text-lg w-16 text-center">' + panier[x][2] + '</div>' +
+                '</span></div></div></div>';
+            index += 1;
+        }
+        panierString += "<span class='px-4 py-2 rounded-md bg-pink-100 text-gray-800'><a href='checkout'>Valider Ma Commande</a></span>";
+
+        document.getElementById("panierList").innerHTML = panierString;
+
+    };
+    if (panier.length == 0) {
+        document.getElementById("panierList").innerHTML = '<h1>Votre panier est Vide</h1>';
+    }
+    afficherList(panier);
+    document.getElementById("valpanier").innerHTML = Object.keys(panier).length;
+
+</script>
+{% endblock js %}

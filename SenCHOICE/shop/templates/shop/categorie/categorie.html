@@ -1,0 +1,104 @@
+
+{% extends 'shop/base.html' %}
+{% block content %}
+
+<style>
+
+</style>
+<!-- image banner -->
+<section class="relative h-32 mb-20">
+    {% if products %}
+
+    <!-- banner -->
+    <div class="2xl:mx-auto 2xl:container mx-4 pt-0 mt-10 bg-transparent lg:mt-20">
+        <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
+        <div class="banner w-full relative flex items-center justify-center pt-0">
+
+            <img src="{{ products.banner.url }}" alt="dining" class="w-all h-all absolute mt-20 z-0 hidden xl:block" />
+            <img src="{{ products.banner.url }}" alt="dining" class="w-all h-all absolute z-0 hidden sm:block xl:hidden" />
+            <img src="{{ products.banner.url }}" alt="dining" class="w-all h-all absolute z-0 sm:hidden" />
+            <div
+                class="bg-gray-800 bg-opacity-50 md:my-16 lg:py-16 py-10 w-full md:mx-24 md:px-12 px-4 flex flex-col items-center justify-center relative z-40">
+                <h1 class="lg:text-3xl font-bold leading-9 text-white text-center">CATEGORIE :</h1>
+                <h1 class="lg:text-6xl font-semibold leading-9 text-white text-center"> {{ products.name }}</h1>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    {% endif %}
+</section>
+
+<section class="mt-20 pt-20 relative 2xl:container lg:container lg:mx-auto w-full flex items-center justify-center ">
+        <div class="grid lg:grid-cols-5 gap-4 grid-cols-2 space-x-1 md:grid-cols-3">
+            {% for product in procat %}
+            <div
+                class="text-center lg:w-56 w-32 md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105    hover:drop-shadow-2xl">
+                <a href="detail/{{product.id}}">
+                    <div class="w-full h-full bg-white content-center shadow-md rounded-lg max-w-sm bg-light dark:border-gray-700">
+                        <a href="{% url 'home' %}detail/{{product.id}}">
+                            <img class="rounded-t-lg p-8 lg:w-56 lg:h-56 md:w-56 md:h-56 sm:w-56 xs:w-32 xs:h-32"
+                                src="{{product.image.url}}" alt="product image" />
+                        </a>
+                        <div class="px-5 pb-5">
+                            <a href="detail/{{product.id}}">
+                                <h3 id="aa{{ product.id }}"
+                                    class="text-gray-900 font-semibold lg:text-lg text-sm tracking-tight text-dark truncate">
+                                    {{product.title}}
+                                </h3>
+                            </a>
+                            <div class="flex items-center mt-2.5 mb-5">
+                                <p class="text-xs truncate">{{ product.category }}</p>
+            
+                            </div>
+            
+                            <div class="flex items-center justify-between ">
+                                <span id="price{{ product.id }}"
+                                    class="lg:text-xl text-sm font-bold text-gray-900 text-dark">{{product.price}} </span>
+                                <h6 class="flex">CFA</h6>
+                            </div>
+                            <div class="flex  justify-between espace-x-2">
+            
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {%endfor %}
+        </div>
+</section>
+
+
+
+
+{% endblock %}
+{% block js %}
+<script class="text/javascript">
+    if (localStorage.getItem('panier') == null) {
+        var panier = {};
+    }
+    else {
+        panier = JSON.parse(localStorage.getItem('panier'));
+    }
+    $(document).on('click', '.ajouter',
+        function () {
+            console.log('ajouter au panier');
+            var item_id = this.id.toString();
+            console.log(item_id);
+            if (panier[item_id] != undefined) {
+                panier[item_id] = panier[item_id] + 1;
+            }
+            else {
+                panier[item_id] = 1;
+            }
+            console.log(panier);
+            localStorage.setItem('panier', JSON.stringify(panier));
+            document.getElementById("valpanier").innerHTML = "(" + Object.keys(panier).length + ")";
+
+        });
+
+
+</script>
+{% endblock %}

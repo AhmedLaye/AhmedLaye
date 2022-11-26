@@ -1,0 +1,57 @@
+<div class="flex  flex-col items-center justify-center mx-auto  ">
+            <div class="w-full  px-2 py-2  mb-0 mx-auto bg-white rounded-2xl shadow-sm w-all">
+                <div class="flex flex-col   ">
+                    <div class="flex">
+                        <!-- Story Bar -->
+                        <ul class="flex text-center   space-x-1  mx-auto ">
+                            <div class="  px-10 py-1  bg-white rounded-2xl   ">
+                                <div class="flex flex-col">
+                                    <div class="flex">
+                                        <!-- Story Bar -->
+                                        <ul
+                                            class="flex items-center w-all overflow-x-auto justify-center lg:space-x-1 w-full mx-auto sm:space-x-1 md:w-4/5  lg:w-full sm:w-full sm:overflow-x-auto">
+                                            <!-- Add Story -->
+                                            {% for categorie in categorie %}
+        
+                                            <li class="flex flex-col items-center space-y-2">
+                                                <!-- Ring -->
+                                                <a href="categorie/{{categorie.id}}">
+                                                    <div class="story-ring flex justify-center items-center
+                                                                bg-gradient-to-r from-sky-500 to-indigo-500
+                                                              border
+                                                              border-2
+                                                              
+                                                                rounded-full  cursor-pointer
+                                                                hover:from-orange-300 hover:to-red-400
+                                                                transition-all duration-150 delay-100">
+                                                        <a class="block bg-white p-1 rounded-full"
+                                                            href="categorie/{{categorie.id}}">
+                                                            <!-- Thumbnail -->
+                                                            <img class="w-16 rounded-full" src="{{categorie.image.url}}">
+                                                        </a>
+        
+        
+        
+        
+                                                    </div>
+        
+                                                    <!-- Username -->
+                                                    <span
+                                                        class="hidden lg:visible 2xl:visible  xl:visible font-medium text-xs truncate  sm:hidden">
+                                                        {{categorie.name}}
+                                                    </span>
+                                                </a>
+                                            </li>
+        
+                                            {% endfor %}
+                                            <!-- ********************* -->
+                                            <p class="text-xs">all categories...</p>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>

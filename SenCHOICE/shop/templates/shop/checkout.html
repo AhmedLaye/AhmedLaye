@@ -1,0 +1,417 @@
+{% extends "shop/base.html" %}
+{% load i18n %}
+        {% load account socialaccount %}
+
+        {% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block content %}
+<div class="container-lg m-auto w-2/4 mb-20">
+   
+</div>
+<!-- component -->
+<style>
+    /*remove custom style*/
+    .circles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .circles li {
+        position: absolute;
+        display: block;
+        list-style: none;
+        width: 20px;
+        height: 20px;
+        background: rgba(254, 252, 191, 0.5);
+        animation: animate 25s linear infinite;
+        bottom: -150px;
+    }
+
+    .circles li:nth-child(1) {
+        left: 25%;
+        width: 80px;
+        height: 80px;
+        animation-delay: 0s;
+    }
+
+
+    .circles li:nth-child(2) {
+        left: 10%;
+        width: 20px;
+        height: 20px;
+        animation-delay: 2s;
+        animation-duration: 12s;
+    }
+
+    .circles li:nth-child(3) {
+        left: 70%;
+        width: 20px;
+        height: 20px;
+        animation-delay: 4s;
+    }
+
+    .circles li:nth-child(4) {
+        left: 40%;
+        width: 60px;
+        height: 60px;
+        animation-delay: 0s;
+        animation-duration: 18s;
+    }
+
+    .circles li:nth-child(5) {
+        left: 65%;
+        width: 20px;
+        height: 20px;
+        animation-delay: 0s;
+    }
+
+    .circles li:nth-child(6) {
+        left: 75%;
+        width: 110px;
+        height: 110px;
+        animation-delay: 3s;
+    }
+
+    .circles li:nth-child(7) {
+        left: 35%;
+        width: 150px;
+        height: 150px;
+        animation-delay: 7s;
+    }
+
+    .circles li:nth-child(8) {
+        left: 50%;
+        width: 25px;
+        height: 25px;
+        animation-delay: 15s;
+        animation-duration: 45s;
+    }
+
+    .circles li:nth-child(9) {
+        left: 20%;
+        width: 15px;
+        height: 15px;
+        animation-delay: 2s;
+        animation-duration: 35s;
+    }
+
+    .circles li:nth-child(10) {
+        left: 85%;
+        width: 150px;
+        height: 150px;
+        animation-delay: 0s;
+        animation-duration: 11s;
+    }
+
+    @keyframes animate {
+
+        0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+            border-radius: 0;
+        }
+
+        100% {
+            transform: translateY(-1000px) rotate(720deg);
+            opacity: 0;
+            border-radius: 50%;
+        }
+
+    }
+</style>
+{% if request.user.is_authenticated %}
+<div class="relative  flex container mx-auto grid ">
+    <div
+        class="flex sm:container sm:w-full flex-col sm:row items-center md:items-start  md:justify-start flex-auto min-w-0 bg-white">
+        <div id="item-list" class="max-w-md w-3/4 sm:container sticky">
+        
+        </div>
+        <div
+            class="md:flex md:items-center md:justify-center w-full sm:w-full md:h-full  xl:w-2/5 p-8  md:p-10 lg:p-1 sm:rounded-lg md:rounded-none bg-white">
+            <div class="max-w-md w-full sm:container sticky">
+                <div class="mb-10">
+                    <h3 class="font-semibold text-2xl text-gray-800">Formulaire de Commande </h3>
+                    <p class="text-gray-500">Remplissez leformulaire pour envoyer votre commande .</p>
+                </div>
+                <!-- <div class="flex">
+                    
+                </div> -->
+                <div class="flex items-center justify-center space-x-2">
+                    <form class="w-full max-w-lg" method="POST">
+                        {% csrf_token %}
+                        <div class="flex flex-wrap -mx-3 mb-4">
+                    
+                    
+                            <input id="items" name="items" type="hidden">
+                    
+                            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                                    Name: {{ request.user.username}}
+                                </label>
+                                <input type="hidden" id="nom" name="nom"
+                                    class="appearance-none block w-full bg-gray-100 text-gray-700 rounded py-3 px-4 mb-3 border border-gray-200 leading-tight focus:outline-none focus:bg-white focus:border-teal-300"
+                                     >
+                            </div>
+                    
+                    
+                        </div>
+                        <div class="flex flex-wrap -mx-3 mb-4">
+                            <div class="w-full px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
+                                    Email: {{user.email}}
+                                </label>
+                                <input type="hidden" id="email" name="email" value="{{ user.email }}"
+                                    class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-teal-300"
+                                      placeholder="joe@gmail.com">
+                    
+                            </div>
+                        </div>
+                    
+                        <div class="flex flex-wrap -mx-3 mb-4">
+                            <div class="w-full px-3">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-adresse">
+                                    Adresse : {{user.adresse}}
+                                </label>
+                                <input type="text" id="address" name="address"
+                                    class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-teal-300"
+                                     type="text" placeholder="Dakar">
+                    
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap -mx-3 mb-4">
+                            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
+                                    ville: {{user.ville}}
+                                </label>
+                                <input type="text" name="ville" id="ville"
+                                    class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-teal-300"
+                                     placeholder="Kochin">
+                            </div>
+                            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+                                    Pays:{{user.pays}}
+                                </label>
+                                <div class="relative">
+                                    <select id="pays" name="pays"
+                                        class="block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-teal-300"
+                                        >
+                                        <option>Sénégal</option>
+                                        <!-- <option>Delhi</option>
+                                        <option>Goa</option> -->
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip"
+                                    >
+                                    Zip
+                                </label>
+                                <input name="zipcode" id="zipcode"
+                                    class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-teal-300"
+                                     type="inputZip" placeholder="00000" name="zipcode">
+                            </div> -->
+                            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-total">
+                                    Total à Payer
+                                </label>
+                                <input
+                                    class=" block w-full bg-gray-900 text-yellow-400 text-xl border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-teal-300"
+                                    id="total" type="readonly" name="total">
+                            </div>
+                        </div>
+                        <div class="space-y-6 mt-6">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <input id="remember_me" name="remember_me" type="checkbox"
+                                        class="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded">
+                                    <label for="remember_me" class="ml-2 block text-sm text-gray-800">
+                                        Remember me
+                                    </label>
+                                </div>
+                                <div class="text-sm">
+                                    <a href="#" class="text-pink-400 hover:text-pink-400">
+                                        Forgot your password?
+                                    </a>
+                                </div>
+                            </div>
+                            <div>
+                                <button type="submit"
+                                    class="w-full flex justify-center bg-pink-400  hover:bg-pink-500 text-gray-100 p-3  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500">
+                                    Commander
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+
+<style>
+  .login_img_section {
+  background: linear-gradient(rgba(2,2,2,.7),rgba(0,0,0,.7)),url(https://images.unsplash.com/photo-1650825556125-060e52d40bd0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80) center center;
+}
+</style>
+<div class="h-auto flex">
+          <div class="hidden lg:flex w-full lg:w-1/2 login_img_section
+          justify-around items-center">
+            <div 
+                  class=" 
+                  bg-black 
+                  opacity-20 
+                  inset-0 
+                  z-0"
+                  >
+
+                  </div>
+            <div class="w-full mx-auto px-20 flex-col items-center space-y-6">
+              <h1 class="text-white font-bold text-4xl font-sans">Senchoice</h1>
+              <p class="text-white mt-1">Acheter des Produits  100% américain</p>
+              
+            </div>
+          </div>
+           <div class="max-w-lg mx-auto  bg-white p-8 rounded-xl shadow shadow-slate-300">
+        <div class="text-center m-auto">
+            <h1 class="text-4xl font-medium">{% trans "Sign In" %}</h1>
+
+            {% get_providers as socialaccount_providers %}
+
+            {% if socialaccount_providers %}
+            <div class="my-5">
+            <p class="text-justify">
+                {% blocktrans with site.name as site_name %}Please sign in with one
+                of your existing third party accounts. Or, <a href="{{ signup_url }}" class="font-medium text-indigo-600">sign up</a>
+                for a {{ site_name }} account and sign in below: </p>
+            <button class="w-1/4 m-auto text-center py-3 my-3 border flex space-x-2 items-center justify-center border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733609.png" class="w-6 h-6" alt=""> <span>{% endblocktrans %}</span>
+
+            <div class="socialaccount_ballot">
+
+                <ul class="socialaccount_providers">
+                    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                </ul>
+            </div>
+            </button>
+        </div>
+        <div class="login-or text-4xl font-medium mt-0 mb-0">{% trans 'or' %}</div>
+
+            {% include "socialaccount/snippets/login_extra.html" %}
+
+            {% else %}
+            <p class="">{% blocktrans %}If you have not created an account yet, then please
+                
+                <a  href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
+                
+            </p>
+            </div>
+            {% endif %}
+        
+                <form class="login my-5 m-auto w-2/4" method="POST" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    <div class="flex flex-col space-y-5 m-auto">
+                    {{ form.as_p }}
+                    </div>
+                    {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    <a class="button secondaryAction font-medium text-indigo-600" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                    
+                    <button
+                        class=" primaryAction w-full py-3 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                        </svg>
+                        <span>{% trans "Sign In" %}</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+      </div>  
+
+{% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+{% block js %}
+
+<script type="text/javascript">
+    if (localStorage.getItem('panier') == null) {
+        var panier = {};
+
+    }
+    else {
+        panier = JSON.parse(localStorage.getItem('panier'));
+    }
+    var total = 0;
+    var nombre = 0;
+    for (item in panier) {
+        let nom = panier[item][1];
+        let quantite = panier[item][0];
+        let prix = panier[item][2];
+        nombre += quantite;
+        total += prix;
+        let itemString = `
+            <div class=" sm:row flex-row justify-between items-center">
+                <div class="sm:w-all flex ">
+                    
+                    <span class="sm:px-1  py-1 rounded-md bg-gray-300 ">-</span>
+                    <span class="font-semibold mx-4">${quantite}</span>
+                    <span class="sm:px-1  py-1 rounded-md bg-gray-300 ">+</span>
+                </div>
+                <div class="flex flex-row items-center sm:w-2/5">
+                    <img src="https://cdn-icons-png.flaticon.com/512/7186/7186988.png" class="w-10 h-10 object-cover rounded-md" alt="">
+                    <span class="ml-4 font-semibold sm:text-sm sm:truncate">${nom}</span>
+                </div>
+                
+                <div class="font-semibold text-red-600 text-xl w-32 text-center">
+                    ${prix} Cfa
+                </div>
+                </div>`
+            ;
+        $('#item-list').append(itemString);
+    }
+    let itemnombre = ` <div class="py-4 rounded-md shadow-lg">
+                                            <div class=" px-4 flex justify-between ">
+                                                <span class="font-semibold text-sm">Nombre de Produits</span>
+                                                <span class="font-bold">${nombre}</span>
+                                            </div>
+                                            <div class=" px-4 flex justify-between ">
+                                                <span class="font-semibold text-sm">Reduction</span>
+                                                <span class="font-bold">- 0</span>
+                                            </div>
+                                            
+                                            <div class="border-t-2 mt-3 py-2 px-4 flex items-center justify-between">
+                                                <span class="font-semibold text-2xl">Total</span>
+                                                <span class="font-bold text-xl">${total} Cfa</span>
+                                            </div>
+                                        </div>
+        `;
+    $('#item-list').append(itemnombre);
+
+
+    $('#items').val(JSON.stringify(panier));
+    $('#total').val(total + " cfa");
+</script>
+{% endblock js %}

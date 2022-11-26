@@ -1,0 +1,399 @@
+
+{% load tailwind_tags %}
+
+{% load static %}
+{% load thumbnail %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="
+                créer boutique vente ligne, vente, achat, laregina,
+                deals, acheter, vendre, boutique en ligne
+            ">
+    <meta property="og:description" content="
+            Vente et achat en ligne Informatiques, Électromenager,
+            Habillement et mode, Téléphones, TV, Jeux Vidéos
+        ">
+    <title>Senchoice- Acheter en ligne !</title>
+    
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://unpkg.com/flowbite@1.4.4/dist/flowbite.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/6.5.95/css/materialdesignicons.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% tailwind_css %}
+
+</head>
+<body>
+    <!-- header -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-5 flex items-center">
+            <!-- logo -->
+            <div class="mr-auto md:w-48 flex-shrink-0">
+                <div>
+                    <a href="/">
+                    <img src="{% static 'img/logo.png' %}" alt="" width="100px" height="100px">
+                    </a>
+                </div>
+
+            </div>
+            <!-- search -->
+            <form action="" class=" bg-white  flex flex-row sm:flex-row  rounded-xl">
+                <div class="w-full max-w-xs xl:max-w-lg 2xl:max-w-2xl bg-gray-100 rounded-md hidden lg:flex items-center">
+    
+                    <input
+                        class="inline w-full border  border-sky-800 border-2  rounded-md pl-10  pr-4 py-2 mx-2 focus:border-blue-500 focus:outline-none focus:shadow-outline"
+                        type="search" name="item-name" placeholder="Je recherche.....">
+                    <button
+                        class="relative group overflow-hidden px-10 h-12 rounded flex space-x-2 items-center bg-gradient-to-r from-teal-900
+ to-teal-500 hover:to-purple-600">
+                        <span class="relative text-sm text-white">Rechercher</span>
+                        <div class="flex items-center -space-x-3 translate-x-3">
+                            <div
+                                class="w-2.5 h-[1.6px] rounded bg-white origin-left scale-x-0 transition duration-300 group-hover:scale-x-100">
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 stroke-white -translate-x-2 transition duration-300 group-hover:translate-x-0"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+                    </button>
+            </form>
+        </div>
+        <!-- phone number -->
+        <div class="ml-auto md:w-48 hidden sm:flex flex-col place-items-end">
+            <span class="font-bold md:text-xl">+221 78 416 18 05</span>
+            <span class="font-semibold text-sm text-gray-400">Support 24/7</span>
+        </div>
+        <!-- buttons -->
+        <nav class="contents">
+            <ul class="ml-20 xl:w-48 flex items-center justify-end ">
+                {% if request.user.is_authenticated %}
+                <li class="ml-2 lg:ml-4 relative inline-flex">
+                    <a class="" href="">
+                        <svg class="h-10 lg:h-10 p-2 text-gray-500" aria-hidden="true" focusable="false" data-prefix="far"
+                            data-icon="user" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                            class="svg-inline--fa fa-user fa-w-14 fa-9x">
+                            <path fill="currentColor"
+                                d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z">
+                            </path>
+                        </svg>
+    
+                    </a>
+                    <div class="ml-1 hidden sm:flex flex-col font-bold">
+                        <span class="text-xs text-gray-400"><a href="{% url 'logout' %}">Deconnection</a></span>
+                        <span>{{user.username}}</span>
+                    </div>
+                </li>
+                {% else %}
+                <li class="ml-2 lg:ml-4 relative inline-flex">
+                    <a class="" href="">
+                        <svg class="h-10 lg:h-10 p-2 text-gray-500" aria-hidden="true" focusable="false" data-prefix="far"
+                            data-icon="user" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                            class="svg-inline--fa fa-user fa-w-14 fa-9x">
+                            <path fill="currentColor"
+                                d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z">
+                            </path>
+                        </svg>
+    
+                    </a>
+                    <div class="ml-1 hidden sm:flex flex-col font-bold">
+                        <span class="text-xs text-gray-400">Se connecter:</span>
+                        <span> <a href="{% url 'login' %}">user </a></span>
+                    </div>
+                </li>
+                {% endif %}
+                <li class="ml-2 lg:ml-4 relative inline-block">
+                    <a class="" href="">
+                        <div class="absolute -top-1 right-0 z-10 bg-yellow-400 text-xs font-bold px-1 py-0.5 rounded-sm">
+                            3</div>
+                        <svg class="h-9 lg:h-10 p-2 text-gray-500" aria-hidden="true" focusable="false" data-prefix="far"
+                            data-icon="heart" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                            class="svg-inline--fa fa-heart fa-w-16 fa-9x">
+                            <path fill="currentColor"
+                                d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z">
+                            </path>
+                        </svg>
+                    </a>
+                </li>
+                <!-- panier -->
+                <li class="ml-2 lg:ml-4 relative inline-block button">
+    
+                    <a class="" id="panier"
+                        class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        type="button" data-modal-toggle="default-modal">
+                        <div id="valpanier"
+                            class="absolute -top-1 right-0 z-10 bg-yellow-400 text-xs font-bold px-1 py-0.5 rounded-full ">
+                            {% if user.cart %}
+                            {{user.cart.orders.count}}
+                            {% endif %}
+                            </div>
+                            
+                        <svg class="h-9 lg:h-10 p-2 text-gray-500" aria-hidden="true" focusable="false" data-prefix="far"
+                            data-icon="shopping-cart" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
+                            class="svg-inline--fa fa-shopping-cart fa-w-18 fa-9x">
+                            <path fill="currentColor"
+                                d="M551.991 64H144.28l-8.726-44.608C133.35 8.128 123.478 0 112 0H12C5.373 0 0 5.373 0 12v24c0 6.627 5.373 12 12 12h80.24l69.594 355.701C150.796 415.201 144 430.802 144 448c0 35.346 28.654 64 64 64s64-28.654 64-64a63.681 63.681 0 0 0-8.583-32h145.167a63.681 63.681 0 0 0-8.583 32c0 35.346 28.654 64 64 64 35.346 0 64-28.654 64-64 0-18.136-7.556-34.496-19.676-46.142l1.035-4.757c3.254-14.96-8.142-29.101-23.452-29.101H203.76l-9.39-48h312.405c11.29 0 21.054-7.869 23.452-18.902l45.216-208C578.695 78.139 567.299 64 551.991 64zM208 472c-13.234 0-24-10.766-24-24s10.766-24 24-24 24 10.766 24 24-10.766 24-24 24zm256 0c-13.234 0-24-10.766-24-24s10.766-24 24-24 24 10.766 24 24-10.766 24-24 24zm23.438-200H184.98l-31.31-160h368.548l-34.78 160z">
+                            </path>
+                        </svg>
+                    </a>
+
+                    <!-- modal bi -->
+                    <div id="default-modal" data-modal-show="false" aria-hidden="true"
+                        class="hidden overflow-x-hidden overflow-y-auto fixed lg:top-0 h-modal md:h-full top-0 left-0 right-0 md:inset-0 z-50 justify-center items-center">
+                        <div class="absolute lg:w-auto max-w-2xl px-4 h-full md:h-auto right-0">
+                            <!-- Modal content -->
+                            <div class="bg-white rounded-lg shadow  fixed right-0 top-0">
+                                <!-- Modal header -->
+                                <div class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-600">
+                                    <h3 class="text-gray-900 text-xl lg:text-2xl font-semibold dark:text-dark">
+                                        Votre Panier
+                                    </h3>
+                                    <button type="button"
+                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        data-modal-toggle="default-modal">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <!-- $$$$$$$$$Modal body $$$$$$$$$$$$$$$$$$$$$$$$$$$ -->
+                                <div class="w-all ">
+                                    <!-- header -->
+                                    <div class="flex flex-row items-center justify-between px-5 mt-5">
+                                        <div class="font-bold text-xl">Liste</div>
+                                        <div class="font-semibold">
+    
+                                            <span class="px-4 py-2 rounded-md bg-gray-100 text-gray-800">Setting</span>
+                                        </div>
+                                    </div>
+                                    <!-- end header -->
+                                    <!-- order list -->
+                                    <div class="px-5 py-4 mt-5 overflow-y-auto h-64 w-all" id="panierList">
+                                        {% if user.cart.orders %}
+    
+                                        {% for order in orders %}
+                                        <h1 class="text-xl">{{order.product.title}}</h1>
+                                        <h1 class="text-xl">{{order.quantity}}</h1>
+                                        
+                                        {% endfor %}
+                                        {% else %}
+                                        votre panier est vide 
+                                        {% endif %}
+                                    </div>
+                                    <!-- end order list -->
+                                    <!-- totalItems -->
+    
+                                    <!-- end total -->
+                                    <!-- cash -->
+                                    <div class="px-5 mt-5">
+    
+                                    </div>
+                                    <!-- end cash -->
+                                    <!-- button pay-->
+    
+                                    <!-- end button pay -->
+                                </div>
+                                <!-- Modal footer -->
+                                <div
+                                    class="flex space-x-2 items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                    <button data-modal-toggle="default-modal" type="button"
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><a href='cart'>Commander</a></button>
+                                    <button id="vider" data-modal-toggle="default-modal" type="button"
+                                        class="vider text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600">continuer</button>
+                                        
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    
+        </div>
+        <hr />
+        <div class="flex items-center justify-center bg-white">
+            <div class="flex flex-col">
+    
+                <!-- Navigation Bar -->
+                <div class="px-5 pt-1 pb-0 bg-white  rounded-2xl">
+                    <div class="flex flex-row space-x-3">
+                        <!-- Item #1 -->
+                        <div class="flex group">
+                            <a href="/" class="p-2 text-black hover:text-yellow-500">
+                                <span class="flex flex-col items-center">
+                                    <!-- Icon -->
+                                    <i class="mdi mdi-home-outline mdi-24px mx-1 text-black group-hover:text-gray-700
+                                                transition-color duration-200"></i>
+    
+                                    <!-- Text -->
+                                    <span class="text-xs mb-2 transition-all duration-200 block">
+                                        <!-- {href='{% url 'home' %}' ou ='/'}-->
+                                        Acceuil
+                                    </span>
+    
+                                    <!-- Focus Dot -->
+                                    <span class="h-1 w-5 rounded-full bg-yellow-500 group-hover:bg-yellow-500
+                                                hover:h-3 hover:w-3 transition-all duration-150 delay-100
+                                        "></span>
+                                </span>
+                            </a>
+                        </div>
+    
+                        <!-- Item #2 -->
+                        <div class="flex group">
+                            <a href="#categorie" class="p-3 text-black hover:text-yellow-500">
+                                <span class="flex flex-col items-center">
+                                    <!-- Icon -->
+    
+                                    <i class='bx bx-category-alt mx-1 pt-1 text-black group-hover:text-gray-700
+                                                transition-color duration-200 text-2xl '></i>
+    
+                                    <!-- Text -->
+                                    <span class="text-xs mb-2 transition-all duration-200">
+                                        Catégories
+                                    </span>
+    
+                                    <!-- Focus Dot -->
+                                    <span class="h-2 w-2 rounded-full group-hover:bg-yellow-500
+                                                transition-all duration-150 delay-100"></span>
+                                </span>
+                            </a>
+                        </div>
+    
+                        <!-- Item #5 -->
+                        <div class="flex group">
+                            <a href="#" class="p-3 text-black hover:text-yellow-500">
+                                <span class="flex flex-col items-center">
+                                    <!-- Icon -->
+                                    <i class="mdi mdi-account-circle-outline mdi-24px mx-1 text-black group-hover:text-gray-700
+                                                transition-color duration-200"></i>
+    
+                                    <!-- Text -->
+                                    <span class="text-xs mb-2 transition-all duration-200">
+                                        Compte
+                                    </span>
+    
+                                    <!-- Focus Dot -->
+                                    <span class="h-2 w-2 rounded-full group-hover:bg-yellow-500
+                                                transition-all duration-150 delay-100"></span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="flex group">
+                            <a href="#" class="p-3 text-black hover:text-yellow-500">
+                                <span class="flex  items-center">
+                                    <div class="">
+                                        <svg class="h-7 lg:h-8 p-2  mx-1 text-black group-hover:text-gray-700
+                                                transition-color duration-200" aria-hidden="true" focusable="false"
+                                            data-prefix="far" data-icon="bolt" role="img" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 384 512" class="svg-inline--fa fa-bolt fa-w-12 fa-9x">
+                                            <path fill="currentColor"
+                                                d="M377.8 167.9c-8.2-14.3-23.1-22.9-39.6-22.9h-94.4l28.7-87.5c3.7-13.8.8-28.3-7.9-39.7C255.8 6.5 242.5 0 228.2 0H97.7C74.9 0 55.4 17.1 52.9 37.1L.5 249.3c-1.9 13.8 2.2 27.7 11.3 38.2C20.9 298 34.1 304 48 304h98.1l-34.9 151.7c-3.2 13.7-.1 27.9 8.6 38.9 8.7 11.1 21.8 17.4 35.9 17.4 16.3 0 31.5-8.8 38.8-21.6l183.2-276.7c8.4-14.3 8.4-31.5.1-45.8zM160.1 457.4L206.4 256H47.5L97.7 48l127.6-.9L177.5 193H334L160.1 457.4z">
+                                            </path>
+                                        </svg>
+                                        <span class="text-xs mb-2 transition-all duration-200">Deal Today</span>
+                                    </div>
+                                </span>
+                            </a>
+                        </div>
+                        {% if request.user.is_authenticated %}
+                         
+                        {% endif %}
+                        
+                        <!-- <div id="alert" class="alert m-auto ">
+                            <div class="flex sm:block bg-green-100 rounded-lg p-4 mb-4 text-sm text-green-700" role="alert">
+                                <svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <div>
+                                    <span id="alertbi" class="font-medium truncate" style="visibility:hidden ;animation-duration: 3000ms;">Success
+                                        alert!</span>
+                                </div>
+                            </div>
+                            
+                        
+                            MDI Icons
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+    
+    </header>
+
+
+    {% block content %}
+    {% endblock content %}
+</body>
+<!-- footer -->
+<!-- <script src="https://kit.fontawesome.com/4db6b32bd3.js" crossorigin="anonymous"></script> -->
+<div class="w-full bg-black text-white relative mb-0">
+    <div class="xl:px-40 pb-12  lg:px-20 md:px-10 sm:px-5 px-10">
+        <div class="w-full pt-12 flex flex-col sm:flex-row space-y-2  justify-start border-current py-3 border-b-2">
+            <div class="w-full sm:w-2/5 pr-6 flex flex-col space-y-0 pt-0">
+                <!-- <img src="logo_transparent.png" alt="" srcset="" width="100"> -->
+                <p class="opacity-60"><a
+                        href="https://www.google.com/maps/search/14+derkl%C3%A9+darou+salam+1+%C3%A0+proximit%C3%A9+de+S.I.C.A.P+Libert%C3%A9+5,+Dakar/@14.7254883,-17.457679,19z">
+                        <span class="mx-1 text-sm"> 14 Derklé Darou Salam 1/ Liberté 5</span>
+                    </a>.
+                <div class="w-full sm:w-1/5 pt-2 flex items-end mb-1">
+                    <div class="flex flex-row space-x-4">
+                        <i class="fab fa-facebook-f"></i>
+                        <i class="fab fa-twitter"></i>
+                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-google"></i>
+                    </div>
+                </div>
+                </p>
+
+            </div>
+            <div class="w-full sm:w-1/5 flex flex-col space-y-4">
+                <a class="opacity-60">Qui sommes nous ?</a>
+                <a class="opacity-60">Devenir Partenaire</a>
+                <a class="opacity-60">Contacts</a>
+            </div>
+            <div class="w-full sm:w-1/5 flex flex-col space-y-4">
+                <a class="opacity-60">Mon Compte</a>
+                <a class="opacity-60">Ma Commande</a>
+                <a class="opacity-60">Historique</a>
+            </div>
+            <div class="w-full sm:w-1/5 flex flex-col space-y-4">
+                <a class="opacity-60">Reclammation</a>
+                <a class="opacity-60">Modes de Payements</a>
+                <a class="opacity-60">Terms et Conditions</a>
+            </div>
+
+        </div>
+
+        <div class="opacity-60 pt-5 text-center align-center">
+            <p>© 2022 Senchoice.</p>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+
+</html>
+</body>
+{% block js %}
+
+{% endblock js %}
+</html>

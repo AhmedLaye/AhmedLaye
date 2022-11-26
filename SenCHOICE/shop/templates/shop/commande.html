@@ -1,0 +1,92 @@
+{% extends "shop/base.html" %}
+{% block content %}
+
+{% if request.user.is_authenticated %}
+ {% if commandes %}
+    <h1 class="font-bold text-3xl text-center mt-4">Suivez votre commande</h1>
+    {% for commande in commandes %}
+    
+    
+    <div class="relative min-h-screen flex container mx-auto  mt-20">
+        <div
+            class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-white">
+            <div id="item-list">
+    
+            </div>
+        </div>
+        <div
+            class="flex flex-col px-4 sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-white container">
+            <p>
+                
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam quae delectus fuga harum cum repellendus id deserunt, nihil perferendis aut maxime, nemo animi, dolores repudiandae officiis et culpa ducimus illo.
+                
+            </p>
+        </div>
+    </div>
+    
+
+    {% endfor %}
+ {% endif %}
+ {% endif %}
+{% endblock %}
+{% block js %}
+
+<script type="text/javascript">
+    if (localStorage.getItem('panier') == null) {
+        var panier = {};
+
+    }
+    else {
+        panier = JSON.parse(localStorage.getItem('panier'));
+    }
+    var total = 0;
+    var nombre = 0;
+    for (item in panier) {
+        let nom = panier[item][1];
+        let quantite = panier[item][0];
+        let prix = panier[item][2];
+        nombre += quantite;
+        total += prix;
+        let itemString = `
+            <div class="flex flex-row justify-between items-center mb-4">
+                <div class="w-32 flex justify-between">
+                    
+                    <span class="px-3 py-1 rounded-md bg-gray-300 ">-</span>
+                    <span class="font-semibold mx-4">${quantite}</span>
+                    <span class="px-3 py-1 rounded-md bg-gray-300 ">+</span>
+                </div>
+                <div class="flex flex-row items-center w-2/5">
+                    <img src="https://cdn-icons-png.flaticon.com/512/7186/7186988.png" class="w-10 h-10 object-cover rounded-md" alt="">
+                    <span class="ml-4 font-semibold text-sm">${nom}</span>
+                </div>
+                
+                <div class="font-semibold text-red-600 text-xl w-32 text-center">
+                    ${prix} Cfa
+                </div>
+                </div>`
+            ;
+        $('#item-list').append(itemString);
+    }
+    let itemnombre = ` <div class="py-4 rounded-md shadow-lg">
+                                            <div class=" px-4 flex justify-between ">
+                                                <span class="font-semibold text-sm">Nombre de Produits</span>
+                                                <span class="font-bold">${nombre}</span>
+                                            </div>
+                                            <div class=" px-4 flex justify-between ">
+                                                <span class="font-semibold text-sm">Reduction</span>
+                                                <span class="font-bold">- 0</span>
+                                            </div>
+                                            
+                                            <div class="border-t-2 mt-3 py-2 px-4 flex items-center justify-between">
+                                                <span class="font-semibold text-2xl">Total</span>
+                                                <span class="font-bold text-xl">${total} Cfa</span>
+                                            </div>
+                                        </div>
+        `;
+    $('#item-list').append(itemnombre);
+
+
+    $('#items').val(JSON.stringify(panier));
+    $('#total').val(total + " cfa");
+</script>
+{% endblock js %}

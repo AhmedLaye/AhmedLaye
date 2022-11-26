@@ -1,0 +1,91 @@
+{% load tailwind_tags %}
+
+{% load static %}
+{% load thumbnail %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="
+                créer boutique vente ligne, vente, achat, laregina,
+                deals, acheter, vendre, boutique en ligne
+            ">
+    <meta property="og:description" content="
+            Vente et achat en ligne Informatiques, Électromenager,
+            Habillement et mode, Téléphones, TV, Jeux Vidéos
+        ">
+    <title>Senchoice- Acheter en ligne !</title>
+
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://unpkg.com/flowbite@1.4.4/dist/flowbite.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/6.5.95/css/materialdesignicons.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% tailwind_css %}
+
+</head>
+<style>
+    .barcode {
+        left: 50%;
+        box-shadow: 1px 0 0 1px, 5px 0 0 1px, 10px 0 0 1px, 11px 0 0 1px, 15px 0 0 1px, 18px 0 0 1px, 22px 0 0 1px, 23px 0 0 1px, 26px 0 0 1px, 30px 0 0 1px, 35px 0 0 1px, 37px 0 0 1px, 41px 0 0 1px, 44px 0 0 1px, 47px 0 0 1px, 51px 0 0 1px, 56px 0 0 1px, 59px 0 0 1px, 64px 0 0 1px, 68px 0 0 1px, 72px 0 0 1px, 74px 0 0 1px, 77px 0 0 1px, 81px 0 0 1px, 85px 0 0 1px, 88px 0 0 1px, 92px 0 0 1px, 95px 0 0 1px, 96px 0 0 1px, 97px 0 0 1px, 101px 0 0 1px, 105px 0 0 1px, 109px 0 0 1px, 110px 0 0 1px, 113px 0 0 1px, 116px 0 0 1px, 120px 0 0 1px, 123px 0 0 1px, 127px 0 0 1px, 130px 0 0 1px, 131px 0 0 1px, 134px 0 0 1px, 135px 0 0 1px, 138px 0 0 1px, 141px 0 0 1px, 144px 0 0 1px, 147px 0 0 1px, 148px 0 0 1px, 151px 0 0 1px, 155px 0 0 1px, 158px 0 0 1px, 162px 0 0 1px, 165px 0 0 1px, 168px 0 0 1px, 173px 0 0 1px, 176px 0 0 1px, 177px 0 0 1px, 180px 0 0 1px;
+        display: inline-block;
+        transform: translateX(-90px);
+    }
+    form p{
+    padding: 20px;
+    margin:auto;
+}
+form label{
+    display: block;
+    text-align: center;
+    
+}
+form input{
+    border-radius: 5px;
+    padding:3px;
+    width: 100%;
+}
+
+</style>
+<div class="flex flex-col items-center justify-center min-h-screen bg-center bg-cover "
+    style="background-image: url(https://img.freepik.com/photos-gratuite/sacs-provisions-portables-concept-magasinage-ligne_1423-189.jpg?w=2000&t=st=1666097164~exp=1666097764~hmac=d19af1cd56d28b65ad7fd06f5617b0e7e24c362873ce26bf138209d56edb8ba2)">
+    <div class="position-absolute top-0 start-0 bg-light">
+        <div>
+            <a href="/">
+                <img src="{% static 'img/logo.png' %}" alt="" width="100px" height="100px">
+            </a>
+        </div>
+    </div>
+
+    <div class="">
+
+        <h1 class="text-6xl xs:text-sm font-bold text-white pt-1 text-center">Senchoice</h1>
+        <span class="pt-0 mt-0 text-dark " style="letter-spacing: 6px;">Votre satisfactions, notre priorité </span>
+        <div class="absolute bg-blue-100 opacity-0 inset-0 z-0"></div>
+    </div>
+
+    <div class="max-w-md w-full h-full mx-auto z-10  rounded-3xl">
+        <div class="flex flex-col w-full rounded items-center justify-center"
+            style="background-color:rgba(236, 233, 230, 0.45) ;">
+
+            <p>{{ message }}</p>
+            <form method="post" class="w-all items-center justify-center">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <div class="items-center justify-center center">
+                    <button type="submit"
+                        class=" m-auto hover:shadow-form w-50 rounded-md bg-[#6A64F1] py-2 px-8 text-center text-base font-semibold text-white outline-none m-3 ">Se
+                        connecter</button>
+                </div>
+                <p>Pas encore membre ? <a href="{% url 'signup' %}">Inscrivez-vous maintenant !</a></p>
+            </form>
+        </div>
+    </div>
+
+</div>
+</div>

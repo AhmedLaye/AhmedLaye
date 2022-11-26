@@ -1,0 +1,79 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    .barcode {
+        left: 50%;
+        box-shadow: 1px 0 0 1px, 5px 0 0 1px, 10px 0 0 1px, 11px 0 0 1px, 15px 0 0 1px, 18px 0 0 1px, 22px 0 0 1px, 23px 0 0 1px, 26px 0 0 1px, 30px 0 0 1px, 35px 0 0 1px, 37px 0 0 1px, 41px 0 0 1px, 44px 0 0 1px, 47px 0 0 1px, 51px 0 0 1px, 56px 0 0 1px, 59px 0 0 1px, 64px 0 0 1px, 68px 0 0 1px, 72px 0 0 1px, 74px 0 0 1px, 77px 0 0 1px, 81px 0 0 1px, 85px 0 0 1px, 88px 0 0 1px, 92px 0 0 1px, 95px 0 0 1px, 96px 0 0 1px, 97px 0 0 1px, 101px 0 0 1px, 105px 0 0 1px, 109px 0 0 1px, 110px 0 0 1px, 113px 0 0 1px, 116px 0 0 1px, 120px 0 0 1px, 123px 0 0 1px, 127px 0 0 1px, 130px 0 0 1px, 131px 0 0 1px, 134px 0 0 1px, 135px 0 0 1px, 138px 0 0 1px, 141px 0 0 1px, 144px 0 0 1px, 147px 0 0 1px, 148px 0 0 1px, 151px 0 0 1px, 155px 0 0 1px, 158px 0 0 1px, 162px 0 0 1px, 165px 0 0 1px, 168px 0 0 1px, 173px 0 0 1px, 176px 0 0 1px, 177px 0 0 1px, 180px 0 0 1px;
+        display: inline-block;
+        transform: translateX(-90px);
+    }
+
+    form p {
+        padding: 20px;
+        margin: auto;
+    }
+
+    form label {
+        display: block;
+        text-align: center;
+        letter-spacing: 3px;
+       
+    }
+
+    form input {
+        border-radius: 5px;
+        padding: 8px;
+        width: 100%;
+    }
+</style>
+
+<section class="bg-white ">
+    <div class="flex justify-center min-h-screen">
+        <div class="hidden bg-cover lg:block lg:w-2/5"
+            style="background-image: url('https://images.unsplash.com/photo-1494621930069-4fd4b2e24a11?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=715&q=80')">
+        </div>
+
+        <div class="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
+            <div class="w-full">
+                <h1 class="text-3xl font-semibold tracking-wider text-dark capitalize ">
+                    Inscription
+                </h1>
+
+                <p class="mt-4 text-gray-500 dark:text-gray-400">
+                    En vous inscrivant sur ce site vous accepter nos conditions d'utilisations
+                </p>
+ 
+                    <form method="post" class="w-all items-center justify-center grid grid-cols-1 gap-6 mt-8 md:grid-cols-2" >
+                        {{ form.as_p }}
+                        {% csrf_token %}
+                        <div class="items-center justify-center center">
+                            
+                        </div>
+                        <p>Pas encore membre ? <a href="{% url 'signup' %}">Inscrivez-vous maintenant !</a></p>
+                        <button
+                            class="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                            <span>Sign Up </span>
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 rtl:-scale-x-100" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    var element=input.labels
+    
+    element.classList.add("block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40")
+
+    
+    $('input:text').attr('placeholder', 'Some New Text');
+    
+</script>
+{% endblock %}
