@@ -12,15 +12,58 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
-
+import pandas
 
 @login_required
 def index(request):
+
      if request.user.is_superuser:
-        return render(request, 'shop/admin.html',)
-        # {'product': product,'categorie': categorie,'image_slide':image_slide,}
+       
+        
+        products = Product.objects.all()
+        categories = Category.objects.all()
+        commandes = Commande.objects.all()
+        totalCommande = commandes.count()
+       
+
+
+        my_dict = {}  
+        for cat in Category.objects.all():
+            list_product = []
+            for prod in Product.objects.filter(category__id=cat.id):
+                if prod.category == cat:
+                    list_product.append(prod)
+                my_dict[cat] = list_product          
+        
+        
+        
+        
+
+        return render(request, 'shop/admin.html',
+        {'list_product': pandas.DataFrame(list_product),
+        
+       
+        'my_dict':my_dict,
+        'commandes':commandes,
+        "totalCommande":totalCommande,
+        
+
+        
+        
+        })
+        
      else:
+        my_dict = {}  
+        for cat in Category.objects.all():
+            list_product = []
+            for prod in Product.objects.filter(category__id=cat.id):
+                if prod.category == cat:
+                    list_product.append(prod)
+                my_dict[cat] = list_product  
+        
         product = Product.objects.all()
+       
+    
         categorie= Category.objects.all()
         CatId=1
         image_slide=slider.objects.all()
@@ -46,7 +89,14 @@ def index(request):
         
      
 
-        return render(request, 'shop/index.html', {'product': product,'categorie': categorie,'image_slide':image_slide,'valeurPanier':valeurPanier,'total':total,})
+        return render(request, 'shop/index.html', {
+            'product': product,
+            'categorie': categorie,
+            'image_slide':image_slide,
+            'valeurPanier':valeurPanier,
+            'total':total,
+            'my_dict':my_dict,
+            })
         # 'listProd':listProd, 'prod':produit,'categ':categ,
 
 

@@ -1,6 +1,115 @@
 {% extends "shop/base.html" %}
 {% load static%}
 {% block content %}
+<div class="flex items-center justify-center bg-white">
+    <div class="flex flex-col">
+
+        <!-- Navigation Bar -->
+        <div class="px-5 pt-1 pb-0 bg-white  rounded-2xl">
+            <div class="flex flex-row space-x-3">
+                <!-- Item #1 -->
+                <div class="flex group">
+                    <a href="/" class="p-2 text-black hover:text-yellow-500">
+                        <span class="flex flex-col items-center">
+                            <!-- Icon -->
+                            <i class="mdi mdi-home-outline mdi-24px mx-1 text-black group-hover:text-gray-700
+                                        transition-color duration-200"></i>
+
+                            <!-- Text -->
+                            <span class="text-xs mb-2 transition-all duration-200 block">
+                                <!-- {href='{% url 'home' %}' ou ='/'}-->
+                                Acceuil
+                            </span>
+
+                            <!-- Focus Dot -->
+                            <span class="h-1 w-5 rounded-full bg-yellow-500 group-hover:bg-yellow-500
+                                        hover:h-3 hover:w-3 transition-all duration-150 delay-100
+                                "></span>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Item #2 -->
+                <div class="flex group">
+                    <a href="#categorie" class="p-3 text-black hover:text-yellow-500">
+                        <span class="flex flex-col items-center">
+                            <!-- Icon -->
+
+                            <i class='bx bx-category-alt mx-1 pt-1 text-black group-hover:text-gray-700
+                                        transition-color duration-200 text-2xl '></i>
+
+                            <!-- Text -->
+                            <span class="text-xs mb-2 transition-all duration-200">
+                                Catégories
+                            </span>
+
+                            <!-- Focus Dot -->
+                            <span class="h-2 w-2 rounded-full group-hover:bg-yellow-500
+                                        transition-all duration-150 delay-100"></span>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Item #5 -->
+                <div class="flex group">
+                    <a href="#" class="p-3 text-black hover:text-yellow-500">
+                        <span class="flex flex-col items-center">
+                            <!-- Icon -->
+                            <i class="mdi mdi-account-circle-outline mdi-24px mx-1 text-black group-hover:text-gray-700
+                                        transition-color duration-200"></i>
+
+                            <!-- Text -->
+                            <span class="text-xs mb-2 transition-all duration-200">
+                                Compte
+                            </span>
+
+                            <!-- Focus Dot -->
+                            <span class="h-2 w-2 rounded-full group-hover:bg-yellow-500
+                                        transition-all duration-150 delay-100"></span>
+                        </span>
+                    </a>
+                </div>
+                <div class="flex group">
+                    <a href="#" class="p-3 text-black hover:text-yellow-500">
+                        <span class="flex  items-center">
+                            <div class="">
+                                <svg class="h-7 lg:h-8 p-2  mx-1 text-black group-hover:text-gray-700
+                                        transition-color duration-200" aria-hidden="true" focusable="false"
+                                    data-prefix="far" data-icon="bolt" role="img" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 384 512" class="svg-inline--fa fa-bolt fa-w-12 fa-9x">
+                                    <path fill="currentColor"
+                                        d="M377.8 167.9c-8.2-14.3-23.1-22.9-39.6-22.9h-94.4l28.7-87.5c3.7-13.8.8-28.3-7.9-39.7C255.8 6.5 242.5 0 228.2 0H97.7C74.9 0 55.4 17.1 52.9 37.1L.5 249.3c-1.9 13.8 2.2 27.7 11.3 38.2C20.9 298 34.1 304 48 304h98.1l-34.9 151.7c-3.2 13.7-.1 27.9 8.6 38.9 8.7 11.1 21.8 17.4 35.9 17.4 16.3 0 31.5-8.8 38.8-21.6l183.2-276.7c8.4-14.3 8.4-31.5.1-45.8zM160.1 457.4L206.4 256H47.5L97.7 48l127.6-.9L177.5 193H334L160.1 457.4z">
+                                    </path>
+                                </svg>
+                                <span class="text-xs mb-2 transition-all duration-200">Deal Today</span>
+                            </div>
+                        </span>
+                    </a>
+                </div>
+                {% if request.user.is_authenticated %}
+                 
+                {% endif %}
+                
+                <!-- <div id="alert" class="alert m-auto ">
+                    <div class="flex sm:block bg-green-100 rounded-lg p-4 mb-4 text-sm text-green-700" role="alert">
+                        <svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <div>
+                            <span id="alertbi" class="font-medium truncate" style="visibility:hidden ;animation-duration: 3000ms;">Success
+                                alert!</span>
+                        </div>
+                    </div>
+                    
+                
+                    MDI Icons
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
         <!-- categories -->
         <!-- MDI Icons -->
         <link rel="stylesheet" href="//cdn.materialdesignicons.com/6.5.95/css/materialdesignicons.min.css">
@@ -95,21 +204,21 @@
     </div>
 
     <!-- list product -->
-    <div class=" container lg:container content-center mx-auto">
-    
-        <section class="mt-10 mb-20 pb-10">
+    <div class="flex flex-col">
+        <div class=" sm:mx-0.5 lg:mx-0.5">
+          <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
             <div>
-                <h4 class="text-xl font-light border-b-4 border-black-500">
+                <h4 class="text-3xl font-bold border-b-4 border-black-500">
                     Derniers ajouts
                 </h4>
     
             </div>
             {% comment %} list products {% endcomment %}
-            <div class="grid lg:grid-cols-5 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-1 space-x-1 md:grid-cols-3 md:mx-auto sm:grid-cols-3 justify-center mx-auto">
-                {% for product in product %}
+            <div class="grid lg:grid-cols-5 2xl:grid-cols-6 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-1 space-x-1 md:grid-cols-3 md:mx-auto sm:grid-cols-3 justify-center mx-auto">
+                {% for product in product|slice:":10" %}
                 
                 <div
-                    class="text-center lg:w-56 w-32 md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105    hover:drop-shadow-2xl">
+                    class="animProduit text-center lg:w-56 w-32 md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105    hover:drop-shadow-2xl">
                     <a href="detail/{{product.id}}">
                         <div
                             class="w-full h-full bg-white content-center shadow-md rounded-lg max-w-sm bg-light dark:border-gray-700">
@@ -142,7 +251,9 @@
                 </div>
                 {%endfor %}
             </div>
-        </section>
+          </div>
+        </div>
+    </div>
         
         <!-- <div class="pagination mt-5 text-center">
         <span class="step-links">
@@ -163,34 +274,65 @@
 <br>
   
    <br>
+  
+    <div class="flex flex-col">
+        <div class=" sm:mx-0.5 lg:mx-0.5">
+          <div class="py-5  inline-block min-w-full sm:px-6 lg:px-8">
+    {% for key, values in my_dict.items %}
+                   
+    <div class="">
+        <button class="group relative  overflow-hidden rounded-lg bg-white text-lg shadow">
+            <div class="absolute inset-0 w-3 bg-[#045757] transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+            <span class="relative text-black group-hover:text-white"> <h4 class="  py-3">
+                <a href="categorie/{{key.id}}" class="lg:text-4xl sm:text-xl font-bold leading-tight">
+                    {{key}} </a>
+        </h4></span>
+        
+          </button><a href="categorie/{{key.id}}" class="px-3"> voir plus</a><i class='text-2xl bx bx-right-arrow-alt' style='color:#045757'  ></i>
+       
+       <div class="border-b-4 border-black-500 pt-3"></div>
+
+    </div>
+    {% comment %} list products {% endcomment %}
+    <div class="py-6 grid lg:grid-cols-5 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-1 space-x-1 md:grid-cols-3 md:mx-auto sm:grid-cols-3 justify-center mx-auto">
+        {% for product in values|slice:":5" %}
+        
+        <div
+            class="animProduit text-center lg:w-56 w-32 md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105  hover:drop-shadow-2xl">
+            <a href="detail/{{product.id}}">
+                <div
+                    class="w-full h-full bg-white content-center shadow-md rounded-lg max-w-sm bg-light dark:border-gray-700">
+                    <a href="detail/{{product.id}}">
+                        <img class="rounded-t-lg p-8 lg:w-56 lg:h-56 md:w-56 md:h-56 sm:w-56 xs:w-32 xs:h-32" src="{{product.image.url}}" alt="product image" />
+                    </a>
+                    <div class="px-5 pb-5">
+                        <a href="detail/{{product.id}}">
+                            <h3 id="aa{{ product.id }}"
+                                class="text-gray-900 font-semibold lg:text-lg text-sm tracking-tight text-dark truncate">
+                                {{product.title}}
+                            </h3>
+                        </a>
+                        
+                       
+                        <div class="flex items-center justify-between ">
+                            <span id="price{{ product.id }}"
+                                class="lg:text-xl text-sm font-bold text-gray-900 text-dark">{{product.price}} </span>
+                            <h6 class="flex">CFA</h6>
+                        </div>
+                        <div class="flex  justify-between espace-x-2">
+                            
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {%endfor %}
+    </div>
+    {% endfor %}
+          </div></div></div>
+</section>
 
    
-    <!-- category -->
-    <div class="h-screen flex items-center justify-center bg-gradient-to-r from-teal-100 to-teal-500" id="categorie">
-    
-        <div class="grid grid-cols-6 gap-x-4 gap-y-1 max-w-2xl">
-    
-            <!-- Title -->
-            <div class="col-span-full mb-3">
-                <h1 class="text-3xl font-bold"> Nos categories </h1>
-            </div>
-    
-            <!-- Card -->
-            {% for categorie in categorie %}
-            <div class="col-span-2">
-                <a href="categorie/{{categorie.id}}">
-                    <img src="https://picsum.photos/seed/4/2000/1000" class="rounded-xl brightness-75" />
-                
-                <p class="text-xs -translate-y-6 text-white font-semibold sm:-translate-y-8 sm:text-base translate-x-3">
-                    {{categorie.name}} </p></a>
-                    
-            </div>
-            {% endfor %}
-    
-    
-        </div>
-    
-    </div>
     
 
 {% block js %}
