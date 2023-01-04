@@ -8,7 +8,7 @@ from django.db import models
 from django.db.models.fields.related import ForeignKey
 from django.urls import reverse
 from django.utils.text import slugify
-
+import pandas
 
 
 
@@ -56,6 +56,7 @@ class Product(models.Model):
         self.slug = self.slug or slugify(self.title)
         super().save(*args,**kwargs)
 
+    
 class Commande(models.Model):
     fini= 'fini'
     traitement='en cours de traitement'

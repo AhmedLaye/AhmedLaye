@@ -24,6 +24,11 @@ def index(request):
         categories = Category.objects.all()
         commandes = Commande.objects.all()
         totalCommande = commandes.count()
+        
+
+            
+           
+
        
 
 
@@ -46,6 +51,7 @@ def index(request):
         'my_dict':my_dict,
         'commandes':commandes,
         "totalCommande":totalCommande,
+        
         
 
         
@@ -130,6 +136,8 @@ def login_page(request):
 
 
 
+    
+
 def signup_page(request):
     form = forms.SignupForm()
     if request.method == 'POST':
@@ -209,8 +217,6 @@ def delete_cart(request):
     if cart := request.user.cart:
         cart.delete()
     return redirect('home')
-
-
 
 
 @login_required

@@ -43,7 +43,7 @@
                     <button  
                         class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
                        
-                        <a  href="" id="{{products.id}}" class="ajouter">Ajouter</a>
+                        <a  href="add-to-cart/{{product.id}}" id="{{products.id}}" class="ajouter">Ajouter</a>
                         <!-- add-to-cart/{{product.id}} -->
                         </button>
                     <button
@@ -112,7 +112,7 @@
 {% endblock %}
 
 {% block js %}
-<script class="text/javascript">
+<!-- <script class="text/javascript">
     if (localStorage.getItem('panier') == null) {
         var panier = {};
     }
@@ -174,5 +174,5 @@
     afficherList(panier);
     document.getElementById("valpanier").innerHTML = Object.keys(panier).length;
 
-</script>
+</script> -->
 {% endblock js %}

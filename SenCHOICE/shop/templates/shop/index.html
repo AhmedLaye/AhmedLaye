@@ -296,9 +296,9 @@
     {% comment %} list products {% endcomment %}
     <div class="py-6 grid lg:grid-cols-5 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-1 space-x-1 md:grid-cols-3 md:mx-auto sm:grid-cols-3 justify-center mx-auto">
         {% for product in values|slice:":5" %}
-        
+        <!-- animProduit -->
         <div
-            class="animProduit text-center lg:w-56 w-32 md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105  hover:drop-shadow-2xl">
+            class=" text-center lg:w-56 w-32 md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105  hover:drop-shadow-2xl">
             <a href="detail/{{product.id}}">
                 <div
                     class="w-full h-full bg-white content-center shadow-md rounded-lg max-w-sm bg-light dark:border-gray-700">
@@ -331,12 +331,12 @@
     {% endfor %}
           </div></div></div>
 </section>
-
+{{list_of_row}}
    
     
 
 {% block js %}
-<script class="text/javascript">
+<!-- <script class="text/javascript">
     if (localStorage.getItem('panier') == null) {
             var panier = {};
         }
@@ -398,7 +398,7 @@
                 afficherList(panier);
         document.getElementById("valpanier").innerHTML = Object.keys(panier).length;
 
-</script>
+</script> -->
 {% endblock js %}
 
 {% endblock content %}
