@@ -1,0 +1,1 @@
+web gunicorn SenCHOICE.wsgi --log-file -

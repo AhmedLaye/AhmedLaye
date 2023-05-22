@@ -24,13 +24,26 @@ def index(request):
         categories = Category.objects.all()
         commandes = Commande.objects.all()
         totalCommande = commandes.count()
+
+
+        try:
+            cart=get_object_or_404(Cart, user=request.user)
+        except:
+            cart=Cart.objects.get_or_create(user=request.user)
+            cart=Cart.save()
+        panier=[]
+        orders=Order.objects.all()
+
+        valeurPanier=0
+        total=0
+        for article in orders:
+            valeurPanier+=article.quantity
+            total+=article.product.price
+
+        item_name = request.GET.get('item-name')
+        if item_name !='' and item_name is not None:
+            product = Product.objects.filter(title__icontains=item_name)
         
-
-            
-           
-
-       
-
 
         my_dict = {}  
         for cat in Category.objects.all():
@@ -39,10 +52,7 @@ def index(request):
                 if prod.category == cat:
                     list_product.append(prod)
                 my_dict[cat] = list_product          
-        
-        
-        
-        
+
 
         return render(request, 'shop/admin.html',
         {'list_product': pandas.DataFrame(list_product),
@@ -51,11 +61,11 @@ def index(request):
         'my_dict':my_dict,
         'commandes':commandes,
         "totalCommande":totalCommande,
-        
+         'valeurPanier':valeurPanier,
+            'total':total,
+            'products':products
         
 
-        
-        
         })
         
      else:
@@ -196,8 +206,10 @@ def add_to_cart(request,id):
     else:
         order.quantity+=1
         order.save()
-    
-    return redirect("detail",id)
+    if request.user.is_superuser:
+        return redirect("new_commande")
+    else:
+        return redirect("detail",id)
 
 @login_required
 def cart(request):
@@ -210,7 +222,10 @@ def cart(request):
         
         valeurPanier+=article.quantity
         total+=article.product.price
-    return render(request, 'shop/cart.html', context={"orders":orders,'total':total})
+    
+    
+    else:
+        return render(request, 'shop/cart.html', context={"orders":orders,'total':total})
 
 
 def delete_cart(request):
@@ -236,4 +251,24 @@ def checkout(request):
         return redirect('confirmation')
     return render(request,'shop/checkout.html') 
         
-    
+
+def CommandeCaisse(request):
+    if request.user.is_superuser:
+       
+        
+        products = Product.objects.all()
+        categories = Category.objects.all()
+        commandes = Commande.objects.all()
+        totalCommande = commandes.count()
+        user = request.user
+        cart=get_object_or_404(Cart, user=user)
+        orders=cart.orders.all()
+        valeurPanier=0
+        total=0
+        for article in orders:
+            
+            valeurPanier+=article.quantity
+            total+=article.product.price
+        
+    return render(request,'shop/admin/admin.html',{'products':products,
+    "orders":orders,'total':total})

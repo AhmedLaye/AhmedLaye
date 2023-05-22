@@ -1,0 +1,146 @@
+<link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+<script src="https://unpkg.com/flowbite@1.4.4/dist/flowbite.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<link rel="stylesheet" href="https://cdn.materialdesignicons.com/6.5.95/css/materialdesignicons.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<div class="w-100  bg-white shadow-xl rounded-lg flex overflow-x-auto custom-scrollbar" style="height: 100%;">
+    <div class="w-1/2 px-4  ">
+        <div class="h-16 flex items-center">
+            <a href="#" class="w-48 mx-auto bg-blue-500 hover:bg-blue-700 flex items-center justify-center text-gray-100 py-2 rounded space-x-2 transition duration-150">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                <span>Compose</span>
+            </a>
+        </div>
+        <div class="px-2 pt-4 pb-8 border-r border-gray-300  overflow-y-auto h-3/4">
+            <ul class="space-y-1 ">
+                {% for product in products %}
+                <li>
+                    <a href="../detail/{{product.id}}/add-to-cart">
+                        {{product.title}}
+                    </a>
+                </li>
+                   
+                {% endfor %}
+               
+            </ul>
+        </div>
+    </div>
+    <div class="flex-1 px-2">
+        <div class="h-16 flex items-center">
+            <h4 class="text-lg font-bold">CAISSE SENCHOICE</h4>
+        </div>
+        <div class="mb-6 pt-4">
+            <section class="antialiased bg-gray-100 text-gray-600  px-4" x-data="app">
+                <div class="flex flex-col justify-center h-full">
+                    <!-- Table -->
+                    <div class="w-full max-w-2xl mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
+                        <header class="px-5 py-4 border-b border-gray-100">
+                            <div class="font-semibold text-gray-800 text-2xl text-center ">Gérer votre panier</div>
+                        </header>
+            
+                        <div class="overflow-x-auto p-3">
+                            <table class="table-auto w-full">
+                                <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+                                    <tr>
+                                        <th></th>
+                                        <th class="p-2">
+                                            <div class="font-semibold text-left">Product Name</div>
+                                        </th>
+                                        <th class="p-2">
+                                            <div class="font-semibold text-left">Quantity</div>
+                                        </th>
+                                        <th class="p-2">
+                                            <div class="font-semibold text-left">Total</div>
+                                        </th>
+                                        <th class="p-2">
+                                            <div class="font-semibold text-center">Action</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+            
+                                <tbody class="text-sm divide-y divide-gray-100">
+                                    {% for order in orders %}
+                                    <tr class="{% cycle 'bg-white' 'bg-gray-100'  %}">
+                                        <td class="p-2">
+                                            <input type="checkbox" class="w-5 h-5" value="id-1"
+                                                @click="toggleCheckbox($el, 2890.66)" />
+                                        </td>
+                                        <td class="p-2">
+                                            <div class="font-medium text-gray-800">
+                                                {{order.product.title}}
+                                            </div>
+                                        </td>
+                                        <td class="p-2">
+                                            <div class="text-left">{{order.quantity}}</div>
+                                        </td>
+                                        <td class="p-2">
+                                            <div class="text-left font-medium text-green-500">
+                                                {{order.product.price}}
+                                            </div>
+                                        </td>
+                                        <td class="p-2">
+                                            <div class="flex justify-center">
+                                                <button>
+                                                    <svg class="w-8 h-8 hover:text-blue-600 rounded-full hover:bg-gray-100 p-1"
+                                                        fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                        </path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                  
+                                </tbody>
+                            </table>
+                        </div>
+            
+                        <!-- total amount -->
+                        <div class="flex justify-end font-bold space-x-4 text-2xl border-t border-gray-100 px-5 py-4">
+                            <div>Total</div>
+                            <form action="">
+                                {% csrf_token %}
+                            <div class="text-blue-600">RM {{total}} </span></div>
+                            <a href="{% url 'checkout' %}">Commander</a></form>
+                            <br>
+                            <a class="text-sm" href="{% url 'delete_cart' %}">supprimer le panier</a>
+                        </div>
+            
+                        <div class="flex justify-end">
+                            <!-- send this data to backend (note: use class 'hidden' to hide this input) -->
+                            <input type="hidden" class="border border-black bg-gray-50" x-model="selected" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <div class="flex items-center space-x-2 my-2">
+               
+            </div>
+            <div class="flex items-center justify-between mt-4">
+                <div class="flex items-center space-x-2">
+                    <button class="bg-blue-500 hover:bg-blue-700 rounded-lg px-12 py-1.5 text-gray-100 hover:shadow-xl transition duration-150">Send</button>
+                    <button title="Attach Files">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 hover:text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+                        </svg>
+                    </button>
+                </div>
+                <button class="mr-4 text-gray-700 hover:text-gray-900" title="Delete">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
