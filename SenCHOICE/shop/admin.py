@@ -12,7 +12,7 @@ class AdminProduct(admin.ModelAdmin):
     list_editable = ('price',)
 
 class AdminCommande(admin.ModelAdmin):
-    list_display = ('items','nom','email','address', 'ville', 'pays','total', 'date_commande', )
+    list_display = ('prod','nom','email','address', 'ville', 'pays','total', 'date_commande', )
 
 class AdminSlider(admin.ModelAdmin):
     pass
@@ -20,7 +20,7 @@ class AdminSlider(admin.ModelAdmin):
 admin.site.register(Product, AdminProduct)
 admin.site.register(Category, AdminCategorie)
 admin.site.register(Commande, AdminCommande)
-admin.site.register(slider, AdminSlider)
+admin.site.register(Slider, AdminSlider)
 admin.site.register(User, AdminUser)
 admin.site.register(Order)
 admin.site.register(Cart)

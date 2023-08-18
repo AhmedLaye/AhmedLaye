@@ -1,7 +1,7 @@
 
 from django.shortcuts import render,redirect
 from django.urls import reverse
-from .models import Product, Commande, Category, slider,Commande, Cart, Order
+from .models import Product, Commande, Category, Slider,Commande, Cart, Order
 from django.core.paginator import Paginator
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
@@ -16,16 +16,13 @@ import pandas
 
 @login_required
 def index(request):
-
+     
      if request.user.is_superuser:
-       
-        
         products = Product.objects.all()
         categories = Category.objects.all()
         commandes = Commande.objects.all()
         totalCommande = commandes.count()
-
-
+        
         try:
             cart=get_object_or_404(Cart, user=request.user)
         except:
@@ -53,7 +50,6 @@ def index(request):
                     list_product.append(prod)
                 my_dict[cat] = list_product          
 
-
         return render(request, 'shop/admin.html',
         {'list_product': pandas.DataFrame(list_product),
         
@@ -64,8 +60,7 @@ def index(request):
          'valeurPanier':valeurPanier,
             'total':total,
             'products':products
-        
-
+    
         })
         
      else:
@@ -78,11 +73,10 @@ def index(request):
                 my_dict[cat] = list_product  
         
         product = Product.objects.all()
-       
-    
         categorie= Category.objects.all()
+        slider=Slider.objects.all()
         CatId=1
-        image_slide=slider.objects.all()
+       
         cart=Cart.objects.get_or_create(user=request.user)
         
         try:
@@ -103,27 +97,23 @@ def index(request):
         if item_name !='' and item_name is not None:
             product = Product.objects.filter(title__icontains=item_name)
         
-     
-
+    
         return render(request, 'shop/index.html', {
             'product': product,
             'categorie': categorie,
-            'image_slide':image_slide,
+            
             'valeurPanier':valeurPanier,
             'total':total,
             'my_dict':my_dict,
+            'slider':slider
             })
         # 'listProd':listProd, 'prod':produit,'categ':categ,
-
-
 
 
 def detail(request, myid):
     product_object = Product.objects.get(id=myid)
     
     return render(request, 'shop/detail.html', {'product': product_object}) 
-
-
 
 def login_page(request):
     form = forms.LoginForm()
@@ -144,10 +134,6 @@ def login_page(request):
     return render(
         request, 'shop/login.html', context={'form': form, 'message': message})
 
-
-
-    
-
 def signup_page(request):
     form = forms.SignupForm()
     if request.method == 'POST':
@@ -158,7 +144,6 @@ def signup_page(request):
             login(request, user)
             return redirect('home')
     return render(request, 'shop/signup.html', context={'form': form})
-
 
 def logout_user(request):
     
@@ -176,7 +161,6 @@ def detail(request, productId):
     product=Product.objects.filter(category__name=products.category.name)
     
     return render(request, 'shop/detail.html',{'products':products,'product':product})
-
 def categorieV(request, CatId):
     products=Category.objects.get(id=CatId)# on fixe la categorie, son nom et l'mage banner
     if products:
@@ -193,39 +177,34 @@ def Allcommande(request):
     return render(request,'shop/commande.html',{'commandes':commandes} )
 
 
-def add_to_cart(request,id):
+@login_required
+def add_to_cart(request, id):
     user = request.user
     product = get_object_or_404(Product, id=id)
     cart, _ = Cart.objects.get_or_create(user=user)
-    order,created = Order.objects.get_or_create(user=user,
-    product=product)
-    # ordered=False,
+    order, created = Order.objects.get_or_create(user=user, product=product)
+
     if created:
         cart.orders.add(order)
         cart.save()
     else:
-        order.quantity+=1
+        order.quantity += 1
         order.save()
+
     if request.user.is_superuser:
         return redirect("new_commande")
     else:
-        return redirect("detail",id)
+        return redirect("detail", id)
 
 @login_required
 def cart(request):
     user = request.user
-    cart=get_object_or_404(Cart, user=user)
-    orders=cart.orders.all()
-    valeurPanier=0
-    total=0
-    for article in orders:
-        
-        valeurPanier+=article.quantity
-        total+=article.product.price
-    
-    
-    else:
-        return render(request, 'shop/cart.html', context={"orders":orders,'total':total})
+    cart = get_object_or_404(Cart, user=user)
+    orders = cart.orders.all()
+    total = sum(order.product.price * order.quantity for order in orders)
+
+    return render(request, 'shop/cart.html', {'orders': orders, 'total': total})
+
 
 
 def delete_cart(request):
@@ -236,20 +215,38 @@ def delete_cart(request):
 
 @login_required
 def checkout(request):
+    items = ""
+    total = 0
+    user = request.user
+    cart = get_object_or_404(Cart, user=user)
+    orders = cart.orders.all()
+
+    for order in orders:
+        items += f"{order.product.title} x ({order.quantity}), "
+        total += order.product.price * order.quantity
+    
+    context={'orders':orders,
+             'total':total,
+             }
     if request.method == 'POST':
-        items=request.POST.get('items')
-        total =request.POST.get('total')
-        nom = request.user
-        email = request.user.email
-        address = request.user.adresse
-        ville = request.user.ville
-        pays = request.user.pays
-        # zipcode= request.POST.get('zipcode')
-        com = Commande(items=items,total=total, nom=nom, email=email, address=address, ville=ville, pays=pays,)
-        # zipcode=zipcode
-        com.save()
+        command = Commande(
+            prod=items,
+            total=total,
+            nom=user,
+            email=user.email,
+            address=user.adresse,
+            ville=user.ville,
+            pays=user.pays,
+            # statut=Commande.traitement  # Définir le statut initial comme "en cours de traitement"
+        )
+        command.save()
+
+        cart.delete()
+
         return redirect('confirmation')
-    return render(request,'shop/checkout.html') 
+
+    return render(request, 'shop/checkout.html',context)
+
         
 
 def CommandeCaisse(request):
@@ -272,3 +269,26 @@ def CommandeCaisse(request):
         
     return render(request,'shop/admin/admin.html',{'products':products,
     "orders":orders,'total':total})
+
+
+
+def update_commande_statut(request, commande_id):
+    commande = get_object_or_404(Commande, pk=commande_id)
+    
+    if request.method == 'POST':
+        # Récupérer le nouvel état de la commande depuis les données du formulaire
+        nouveau_statut = request.POST.get('statut')
+
+        # Vérifier si le nouveau statut est "livré"
+        if nouveau_statut == 'livré':
+            # Supprimer la commande
+            commande.delete()
+            return redirect('/')  # Rediriger vers la vue de liste de commandes après la suppression
+
+        # Mettre à jour l'état de la commande
+        commande.statut = nouveau_statut
+        commande.save()
+        
+        return redirect('/') 
+    
+    return redirect('/')

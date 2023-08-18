@@ -6,7 +6,7 @@
 <section class="text-gray-700 body-font overflow-hidden bg-white">
     <div class="container px-5 py-14 mx-auto">
         <div class="lg:w-4/5 mx-auto flex flex-wrap">
-            <img alt="ecommerce" class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
+            <img alt="ecommerce" class="lg:w-1/2 w-56 object-cover object-center rounded border border-gray-200"
                 src="{{ products.image.url }}">
             <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                 <h2 class="text-sm title-font text-gray-500 tracking-widest">Senchoice</h2>
@@ -43,6 +43,7 @@
                     <button  
                         class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
                        
+
                         <a  href="add-to-cart/{{product.id}}" id="{{products.id}}" class="ajouter">Ajouter</a>
                         <!-- add-to-cart/{{product.id}} -->
                         </button>
@@ -93,7 +94,7 @@
                             <p class="text-xs truncate">{{ product.category }}</p>
 
                         </div>
-
+                        
                         <div class="flex items-center justify-between ">
                             <span id="price{{ product.id }}"
                                 class="lg:text-xl text-sm font-bold text-gray-900 text-dark">{{product.price}} </span>
@@ -112,67 +113,5 @@
 {% endblock %}
 
 {% block js %}
-<script class="text/javascript">
-    if (localStorage.getItem('panier') == null) {
-        var panier = {};
-    }
-    else {
-        panier = JSON.parse(localStorage.getItem('panier'));
-    }
-    $(document).on('click', '.ajouter',
-        function () {
-            console.log('ajouter au panier');
-            var item_id = this.id.toString();
-            console.log(item_id);
-            if (panier[item_id] != undefined) {
-                quantite = panier[item_id][0] + 1;
-                panier[item_id][0] = quantite;
-                panier[item_id][2] += parseFloat(document.getElementById("price" + item_id).innerHTML);
 
-
-
-
-
-
-
-
-            }
-            else {
-                quantite = 1;
-                name = document.getElementById("aa" + item_id).innerHTML;
-                prix = parseFloat(document.getElementById("price" + item_id).innerHTML);
-                panier[item_id] = [quantite, name, prix];
-
-
-
-            }
-            console.log(panier);
-            localStorage.setItem('panier', JSON.stringify(panier));
-            window.location.reload();
-
-        });
-    function afficherList(panier) {
-
-        var panierString = "";
-        panierString += '<div class=" w-3/4  overflow-y-auto"><div class="flex flex-row  justify-between items-center">';
-        var index = 1;
-        for (var x in panier) {
-            panierString += '<div class="flex flex-row  items-center"><span class="ml-4 font-semibold text-sm truncate">' + "N°"
-                + index + "- ";
-            panierString += document.getElementById("aa" + x).innerHTML + '<div class="w-32 flex justify-between"><span class="px-3 py-1 rounded-md bg-gray-300 " > -</span><span class="font-semibold mx-4 ">' + panier[x][0] + '</span><span class="px-3 py-1 rounded-md bg-gray-300 ">+</span></div ><div class="font-semibold text-lg w-16 text-center">' + panier[x][2] + '</div>' +
-                '</span></div></div></div>';
-            index += 1;
-        }
-        panierString += "<span class='px-4 py-2 rounded-md bg-pink-100 text-gray-800'><a href='checkout'>Valider Ma Commande</a></span>";
-
-        document.getElementById("panierList").innerHTML = panierString;
-
-    };
-    if (panier.length == 0) {
-        document.getElementById("panierList").innerHTML = '<h1>Votre panier est Vide</h1>';
-    }
-    afficherList(panier);
-    document.getElementById("valpanier").innerHTML = Object.keys(panier).length;
-
-</script>
 {% endblock js %}

@@ -17,5 +17,6 @@ urlpatterns=[
     path('confirmation/', confirmation, name="confirmation"),
     path('commande/', Allcommande, name="commande"),
     path('commander/', CommandeCaisse, name="new_commande"),
-    path('commander/<int:id>/add-to-cart/',add_to_cart, name='add-to-cart')
+    path('commander/<int:id>/add-to-cart/',add_to_cart, name='add-to-cart'),
+    path('update_commande_statut/<int:commande_id>/', update_commande_statut, name='update_commande_statut'),
 ]

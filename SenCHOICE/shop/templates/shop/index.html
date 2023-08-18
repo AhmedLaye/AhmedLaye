@@ -119,30 +119,23 @@
             }
         </style>
         
-    <div class=" mx-auto  flex">
-        <div class=" flex-none w-2/3 ">
-        
+    <div class=" mx-auto  ">
+        <div class=" flex-none w-full ">
             <div id="default-carousel" class="relative" data-carousel="static">
                 <!-- Carousel wrapper -->
                 <div class="overflow-hidden relative h-56 rounded-lg sm:h-64 xl:h-80 2xl:h-96">
                     <!-- Item 1 -->
+                    {% for img in slider %}
                     <div class="hidden duration-700 ease-in-out" data-carousel-item>
                         <span
-                            class="absolute top-1/2 left-1/2 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 sm:text-3xl dark:text-gray-800">First
+                            class="">First
                             Slide</span>
-                        <img src="{% static 'img/sale.jpg' %}"
+                        <img src="{{ img.image.url }}"
                             class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="...">
                     </div>
-                    <!-- Item 2 -->
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="{% static 'img/sale.jpg' %}"
-                            class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="...">
-                    </div>
-                    <!-- Item 3 -->
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="{% static 'img/sale.jpg' %}"
-                            class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="...">
-                    </div>
+                    {% endfor %}
+                  
+                    
                 </div>
                 <!-- Slider indicators -->
                 <div class="flex absolute bottom-5 left-1/2 z-30 space-x-3 -translate-x-1/2">
@@ -182,25 +175,6 @@
         
             <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
         </div>
-
-        <div class="flex-initial w-full px-1">
-            <h1 class="text-center leading-1 font-bold text-2xl">Nos Categories</h1>
-            <div class="grid grid-cols-3 gap-3 w-full espace-x-2">
-                {% for categorie in categorie %}
-                <div class=" ">
-                <a href="categorie/{{categorie.id}}">
-                    <button class="group relative  w-32 overflow-hidden rounded-lg bg-white text-lg shadow">
-                        <div class="absolute inset-0 w-3 bg-teal-700 transition-all duration-[250ms] ease-out group-hover:w-full"><img class="w-16 rounded-full" src="{{categorie.image.url}}"></div>
-                        <span class="relative text-sm text-black group-hover:text-white leading-1">{{categorie.name}}</span>
-                    </button>
-                    
-                    <!-- <img class="w-16 rounded-full" src="{{categorie.image.url}}"> -->
-                </a>
-                </div>
-                {% endfor %}
-                
-            </div>
-        </div>  
     </div>
 
     <!-- list product -->
@@ -210,15 +184,16 @@
             <div>
                 <h4 class="text-3xl font-bold border-b-4 border-black-500">
                     Derniers ajouts
+                   
                 </h4>
     
             </div>
             {% comment %} list products {% endcomment %}
-            <div class="grid lg:grid-cols-5 2xl:grid-cols-6 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-1 space-x-1 md:grid-cols-2 md:mx-auto sm:grid-cols-1 justify-center mx-auto">
+            <div class="grid lg:grid-cols-5 2xl:grid-cols-6 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-2 space-x-1 md:grid-cols-1 md:mx-auto sm:grid-cols-1 justify-center mx-auto">
                 {% for product in product|slice:":10" %}
                 
                 <div
-                    class="animProduit text-center lg:w-56 w-32 md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105    hover:drop-shadow-2xl">
+                    class="animProduit text-center lg:w-56 w-full md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105    hover:drop-shadow-2xl">
                     <a href="detail/{{product.id}}">
                         <div
                             class="w-full h-full bg-white content-center shadow-md rounded-lg max-w-sm bg-light dark:border-gray-700">
@@ -255,21 +230,33 @@
         </div>
     </div>
         
-        <!-- <div class="pagination mt-5 text-center">
-        <span class="step-links">
-          {% if products.has_previous %}
-          <a href="?page=1">&laquo; first</a>
-          <a href="?page={{ products.previous_page_number }}"><i class="bx bxs-left-arrow-circle text-5xl"></i></a>
-          {% endif %} {% if products.has_next %}
-          <a href="?page={{ products.next_page_number }}"><i class="bx bxs-right-arrow-circle text-5xl"></i></a>
-          <a href="?page={{ products.paginator.num_pages }}">last &raquo;</a>
-          {% endif %}
-          <span class="current block">
-            Page {{ products.number }} of {{ products.paginator.num_pages }}.
-          </span>
-        </span>
-      </div> -->
-        <!-- produit par categories -->
+    <!-- component -->
+<div class="h-min-screen flex items-center justify-center bg-[#0f766e] mt-5">
+
+    <div class="grid grid-cols-6 gap-x-4 gap-y-1 max-w-2xl">
+  
+      <!-- Title -->
+      <div class="col-span-full mb-3 animProduit">
+        <h4 class="text-3xl font-bold text-white">
+           Nos Categorie
+        </h4>
+      </div>
+      
+      {% for cat in categorie %}
+      <!-- Card 1 -->
+      <div class="col-span-2">
+        <a href="{% url 'categorie' cat.id %}">
+          <img src="{{ cat.image.url }}" class="rounded-xl brightness-75" />
+        </a>
+        <p class="text-xs -translate-y-6 text-white font-semibold sm:-translate-y-8 sm:text-base translate-x-3"> {{cat.name}} </p>
+      </div>
+      {% endfor %}
+      <!-- Card 2 -->
+     
+  
+    </div>
+  
+  </div>
     </div>
 <br>
   
@@ -298,7 +285,7 @@
         {% for product in values|slice:":5" %}
         <!-- animProduit -->
         <div
-            class=" text-center lg:w-56 w-32 md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105  hover:drop-shadow-2xl">
+            class=" animProduit text-center lg:w-56 w-32 md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105  hover:drop-shadow-2xl">
             <a href="detail/{{product.id}}">
                 <div
                     class="w-full h-full bg-white content-center shadow-md rounded-lg max-w-sm bg-light dark:border-gray-700">
@@ -336,69 +323,7 @@
     
 
 {% block js %}
-<script class="text/javascript">
-    if (localStorage.getItem('panier') == null) {
-            var panier = {};
-        }
-        else {
-            panier = JSON.parse(localStorage.getItem('panier'));
-        }
-        $(document).on('click', '.ajouter',
-            function () {
-                console.log('ajouter au panier');
-                var item_id = this.id.toString();
-                console.log(item_id);
-                if (panier[item_id] != undefined) {
-                    quantite = panier[item_id][0] + 1;
-                    panier[item_id][0] = quantite;
-                    panier[item_id][2] += parseFloat(document.getElementById("price" + item_id).innerHTML);
-
-
-
-
-
-
-
-
-                }
-                else {
-                    quantite = 1;
-                    name = document.getElementById("aa" + item_id).innerHTML;
-                    prix = parseFloat(document.getElementById("price" + item_id).innerHTML);
-                    panier[item_id] = [quantite, name, prix];
-
-
-
-                }
-                console.log(panier);
-                localStorage.setItem('panier', JSON.stringify(panier));
-                window.location.reload();
-
-            }); 
-            function afficherList(panier) {
-
-                    var panierString = "";
-                    panierString += '<div class=" w-3/4  overflow-y-auto"><div class="flex flex-row  justify-between items-center">';
-                    var index = 1;
-                    for (var x in panier) {
-                        panierString += '<div class="flex flex-row  items-center"><span class="ml-4 font-semibold text-sm truncate">' + "N°"
-                            + index + "- ";
-                        panierString += document.getElementById("aa" + x).innerHTML + '<div class="w-32 flex justify-between"><span class="px-3 py-1 rounded-md bg-gray-300 " > -</span><span class="font-semibold mx-4 ">' + panier[x][0] + '</span><span class="px-3 py-1 rounded-md bg-gray-300 ">+</span></div ><div class="font-semibold text-lg w-16 text-center">' + panier[x][2] + '</div>' +
-                            '</span></div></div></div>';
-                        index += 1;
-                    }
-                    panierString += "<span class='px-4 py-2 rounded-md bg-pink-100 text-gray-800'><a href='checkout'>Valider Ma Commande</a></span>";
-
-                    document.getElementById("panierList").innerHTML = panierString;
-
-                };
-                if (panier.length == 0) {
-                    document.getElementById("panierList").innerHTML = '<h1>Votre panier est Vide</h1>';
-                }
-                afficherList(panier);
-        document.getElementById("valpanier").innerHTML = Object.keys(panier).length;
-
-</script>
+    
 {% endblock js %}
 
 {% endblock content %}

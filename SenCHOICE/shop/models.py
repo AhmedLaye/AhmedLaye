@@ -9,7 +9,7 @@ from django.db.models.fields.related import ForeignKey
 from django.urls import reverse
 from django.utils.text import slugify
 import pandas
-
+from django.http import JsonResponse
 
 
 
@@ -28,8 +28,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name    
 
-class slider(models.Model):
-    image=models.ImageField(upload_to="image_slider")
+class Slider(models.Model):
+    image=models.ImageField(upload_to="image_slider", null=True, blank=True)
+   
+    
     def __str__(self):
         return "image"
 
@@ -68,7 +70,7 @@ class Commande(models.Model):
          (livraison,'livraison en cours'),
         (livrer,'livré'),
         ]
-    items = models.CharField(max_length=300,null=True)
+    prod = models.CharField(max_length=300,null=True)
     total = models.CharField(max_length=200, null=True)
     nom=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     email = models.EmailField()
@@ -77,7 +79,7 @@ class Commande(models.Model):
     pays = models.CharField(max_length=300)
     # zipcode = models.CharField(max_length=300)
     date_commande = models.DateTimeField(auto_now=True)
-    # statut=models.CharField(choices=STATUT, max_length=100, null=True)
+    statut=models.CharField(choices=STATUT, max_length=100, null=True, blank=True, default=traitement)
 
     class Meta:
         ordering = ['-date_commande']
@@ -94,7 +96,10 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.product.title} ({self.quantity})"
-    
+
+
+
+
 
 class Cart(models.Model):
     user=models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
@@ -110,11 +115,7 @@ class Cart(models.Model):
         self.orders.clear()
         super().delete(*args,** kwargs)
 
-    
-        
-
-
-    
     def __str__(self):
         return  self.user.username
     
+
