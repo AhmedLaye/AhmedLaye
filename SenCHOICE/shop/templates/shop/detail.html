@@ -4,6 +4,31 @@
 
 <!-- detail page  -->
 <section class="text-gray-700 body-font overflow-hidden bg-white">
+    <div id="alert-container">
+        {% if request.GET.added == True %}
+        <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
+            <div class="flex">
+              <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+              <div>
+                <p class="font-bold">Produit {{products.title}}</p>
+                <p class="text-sm">ajouté avec succes.</p>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% if request.GET.added == False %}
+          <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
+            <div class="flex">
+              <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+              <div>
+                <p class="font-bold">Produit {{products.title}}</p>
+                <p class="text-sm">Vous venez d'augmenter la quantite de commande .</p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+    </div>
+
     <div class="container px-5 py-14 mx-auto">
         <div class="lg:w-4/5 mx-auto flex flex-wrap">
             <img alt="ecommerce" class="lg:w-1/2 w-56 object-cover object-center rounded border border-gray-200"
@@ -18,35 +43,17 @@
                         <span class="mr-3">Stock</span>
                         <button class="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none">5</button>
                     </div>
-                    <div class="flex ml-6 items-center">
-                        <span class="mr-3">Size</span>
-                        <div class="relative">
-                            <select
-                                class="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-red-500 text-base pl-3 pr-10">
-                                <option>1g</option>
-                                <option>5g</option>
-                                <option>10g</option>
-                                <option>1kg</option>
-                            </select>
-                            <span
-                                class="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" class="w-4 h-4" viewBox="0 0 24 24">
-                                    <path d="M6 9l6 6 6-6"></path>
-                                </svg>
-                            </span>
-                        </div>
-                    </div>
+                    
                 </div>
                 <div class="flex">
                     <span class="title-font font-medium text-2xl text-gray-900" id="price{{ products.id }}">{{ products.price }} Cfa</span>
+                    <a  href="add-to-cart/{{product.id}}" id="{{products.id}}" class="ajouter">
                     <button  
                         class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
-                       
-
-                        <a  href="add-to-cart/{{product.id}}" id="{{products.id}}" class="ajouter">Ajouter</a>
+                       Ajouter
                         <!-- add-to-cart/{{product.id}} -->
                         </button>
+                    </a>
                     <button
                         class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                         <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -64,7 +71,7 @@
 
 <section class="container mt-10 mb-20 pb-10 mx-auto">
     <div>
-        <h4 class="text-2xl font-bold border-b-4 border-black-500">
+        <h4 class="text-2xl font-bold border-b-4 border-black-500 container">
             Produits du même Categorie
         </h4>
 
@@ -76,10 +83,10 @@
 
         <div
             class="text-center lg:w-56 w-32 md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105    hover:drop-shadow-2xl">
-            <a href="detail/{{product.id}}">
+            <a href="{% url 'detail' product.id %}">
                 <div
                     class="w-full h-full bg-white content-center shadow-md rounded-lg max-w-sm bg-light dark:border-gray-700">
-                    <a href="detail/{{product.id}}">
+                    <a href=" {% url 'detail' product.id %}">
                         <img class="rounded-t-lg p-8 lg:w-56 lg:h-56 md:w-56 md:h-56 sm:w-56 xs:w-32 xs:h-32"
                             src="{{product.image.url}}" alt="product image" />
                     </a>
@@ -110,8 +117,9 @@
         {%endfor %}
     </div>
 </section>
+
+
+
 {% endblock %}
 
-{% block js %}
 
-{% endblock js %}

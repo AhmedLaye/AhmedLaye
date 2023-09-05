@@ -168,7 +168,7 @@
                 class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-blue-800  dark:bg-[#0c4a6e]  border-none">
                 <img class="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden"
                     src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg" />
-                <span class="hidden md:block">ADMIN</span>
+                <span class="hidden md:block">{{request.user}}</span>
             </div>
             <div class="flex justify-between items-center h-14 bg-blue-800 dark:bg-[#0c4a6e] header-right">
                 <div
@@ -246,36 +246,8 @@
                             <span class="ml-2 text-sm tracking-wide truncate">Dashboard</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#"
-                            class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-[#0284c7] text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
-                            <span class="inline-flex justify-center items-center ml-4">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
-                                    </path>
-                                </svg>
-                            </span>
-                            <span class="ml-2 text-sm tracking-wide truncate">Board</span>
-                            <span
-                                class="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">New</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-[#0284c7] text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
-                            <span class="inline-flex justify-center items-center ml-4">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z">
-                                    </path>
-                                </svg>
-                            </span>
-                            <span class="ml-2 text-sm tracking-wide truncate">Messages</span>
-                        </a>
-                    </li>
+                    
+                    
                     <li>
                         <a href="#"
                             class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-[#0284c7] text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
@@ -289,7 +261,7 @@
                             </span>
                             <span class="ml-2 text-sm tracking-wide truncate">Notifications</span>
                             <span
-                                class="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-red-500 bg-red-50 rounded-full">1.2k</span>
+                                class="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-red-500 bg-red-50 rounded-full">1</span>
                         </a>
                     </li>
                     <li class="px-5 hidden md:block">
@@ -335,7 +307,7 @@
         <div class="h-full ml-14 mt-14 mb-10 md:ml-64">
 
             <!-- Statistics Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 p-4 gap-3">
                 <div
                     class="bg-blue-500 dark:bg-gray-200 shadow-lg rounded-md flex items-center justify-between p-3 border-b-4   text-black font-medium group hover:bg-[#f472b6]">
                     <div
@@ -368,21 +340,7 @@
                         <a href="{% url 'new_commande' %}">Ajouter</a>
                     </div>
                 </div>
-                <div
-                    class="bg-blue-500 dark:bg-gray-200 shadow-lg rounded-md flex items-center justify-between p-3 border-b-4   text-black font-medium group  hover:bg-[#f472b6]">
-                    <div
-                        class="flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12">
-                        <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-                        </svg>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-2xl">$11,257</p>
-                        <p>Sales</p>
-                    </div>
-                </div>
+               
                 <div
                     class="bg-blue-500 dark:bg-gray-200 shadow-lg rounded-md flex items-center justify-between p-3 border-b-4   text-black font-medium group  hover:bg-[#f472b6]">
                     <div
@@ -395,7 +353,7 @@
                         </svg>
                     </div>
                     <div class="text-right">
-                        <p class="text-2xl">$75,257</p>
+                        <p class="text-2xl">{{balance}} cfa</p>
                         <p>Balances</p>
                     </div>
                 </div>
@@ -408,6 +366,7 @@
                     <thead>
                         <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-black dark:bg-gray-200">
                             <th class="px-4 py-3">Commande</th>
+                            <th class="px-4 py-3">Cient</th>
                             <th class="px-4 py-3">Total</th>
                             <th class="px-4 py-3">Status</th>
                             <th class="px-4 py-3">Date</th>
@@ -424,6 +383,7 @@
                                     </div>
                                 </div>
                             </td>
+                            <td class="px-4 py-3 text-sm">{{ commande.nom.first_name }} {{ commande.nom.last_name }}</td>
                             <td class="px-4 py-3 text-sm">{{ commande.total }}</td>
                             <form method="post" action="{% url 'update_commande_statut' commande.id %}">
                             <td class="px-4 py-3 text-xs">

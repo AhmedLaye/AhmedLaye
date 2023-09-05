@@ -13,15 +13,20 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 import pandas
+from django.http import HttpResponseRedirect
+
 
 @login_required
 def index(request):
-     
+     balance=0
      if request.user.is_superuser:
         products = Product.objects.all()
         categories = Category.objects.all()
         commandes = Commande.objects.all()
         totalCommande = commandes.count()
+        
+        for com in commandes:
+            balance+=float(com.total)   
         
         try:
             cart=get_object_or_404(Cart, user=request.user)
@@ -59,11 +64,13 @@ def index(request):
         "totalCommande":totalCommande,
          'valeurPanier':valeurPanier,
             'total':total,
-            'products':products
+            'products':products,
+            'balance':balance
     
         })
         
      else:
+        
         my_dict = {}  
         for cat in Category.objects.all():
             list_product = []
@@ -96,6 +103,8 @@ def index(request):
         item_name = request.GET.get('item-name')
         if item_name !='' and item_name is not None:
             product = Product.objects.filter(title__icontains=item_name)
+            return render(request, 'shop/recherche.html', {'product':product, 'item_name':item_name})
+
         
     
         return render(request, 'shop/index.html', {
@@ -105,7 +114,8 @@ def index(request):
             'valeurPanier':valeurPanier,
             'total':total,
             'my_dict':my_dict,
-            'slider':slider
+            'slider':slider,
+            
             })
         # 'listProd':listProd, 'prod':produit,'categ':categ,
 
@@ -187,9 +197,14 @@ def add_to_cart(request, id):
     if created:
         cart.orders.add(order)
         cart.save()
+        return HttpResponseRedirect(reverse('detail', args=[id]) + "?added=True")
+
+        
     else:
         order.quantity += 1
         order.save()
+        return HttpResponseRedirect(reverse('detail', args=[id]) + "?added=False")
+
 
     if request.user.is_superuser:
         return redirect("new_commande")
