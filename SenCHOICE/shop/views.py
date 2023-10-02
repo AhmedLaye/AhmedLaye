@@ -16,7 +16,7 @@ import pandas
 from django.http import HttpResponseRedirect
 
 
-@login_required
+
 def index(request):
      balance=0
      if request.user.is_superuser:
@@ -26,7 +26,8 @@ def index(request):
         totalCommande = commandes.count()
         
         for com in commandes:
-            balance+=float(com.total)   
+            balance+=float(com.total)  
+
         
         try:
             cart=get_object_or_404(Cart, user=request.user)
@@ -70,7 +71,8 @@ def index(request):
         })
         
      else:
-        
+        valeurPanier = 0
+        total =0
         my_dict = {}  
         for cat in Category.objects.all():
             list_product = []
@@ -83,22 +85,23 @@ def index(request):
         categorie= Category.objects.all()
         slider=Slider.objects.all()
         CatId=1
-       
-        cart=Cart.objects.get_or_create(user=request.user)
-        
-        try:
-            cart=get_object_or_404(Cart, user=request.user)
-        except:
+        if request.user.is_authenticated :
+            
             cart=Cart.objects.get_or_create(user=request.user)
-            cart=Cart.save()
-        panier=[]
-        orders=Order.objects.all()
+            
+            try:
+                cart=get_object_or_404(Cart, user=request.user)
+            except:
+                cart=Cart.objects.get_or_create(user=request.user)
+                cart=Cart.save()
+            panier=[]
+            orders=Order.objects.all()
 
-        valeurPanier=0
-        total=0
-        for article in orders:
-            valeurPanier+=article.quantity
-            total+=article.product.price
+            valeurPanier=0
+            total=0
+            for article in orders:
+                valeurPanier+=article.quantity
+                total+=article.product.price
 
         item_name = request.GET.get('item-name')
         if item_name !='' and item_name is not None:
