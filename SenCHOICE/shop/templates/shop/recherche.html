@@ -1,21 +1,21 @@
 {% extends "shop/base.html" %}
 
 {% block content  %}
-<div class="flex flex-col">
+<div class="flex flex-col mt-5">
     <div class=" sm:mx-0.5 lg:mx-0.5">
       <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
         <div>
-            <h4 class="text-3xl font-normal border-b-4 mt-5 border-black-500">
+            <h4 class="text-3xl text-center font-normal border-b-4 mb-5 border-black-500">
                 Resultat de votre recherche "{{item_name}}"
                
             </h4>
 
         </div>
        
-        <div class="grid lg:grid-cols-5 2xl:grid-cols-6 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-2 space-x-1 md:grid-cols-1 md:mx-auto sm:grid-cols-1 justify-center mx-auto">
+        <div class="w-11/12 mt-10 grid lg:grid-cols-4 2xl:grid-cols-6 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-2 space-x-1 md:grid-cols-1 md:mx-auto sm:grid-cols-1 justify-center mx-auto">
             {% for product in product %}
             <div
-                class="animProduit text-center lg:w-56 w-full md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105    hover:drop-shadow-2xl">
+                class="animProduit text-center lg:w-56 w-full md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-110 hover:drop-shadow-xl hover:drop-shadow-xl-indigo-700 ">
                 <a href="detail/{{product.id}}">
                     <div
                         class="w-full h-full bg-white content-center shadow-md rounded-lg max-w-sm bg-light dark:border-gray-700">

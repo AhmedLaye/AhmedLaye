@@ -15,11 +15,21 @@ from django.db.models import Q
 import pandas
 from django.http import HttpResponseRedirect
 
+from django.core.cache import cache
+
+
+
+# Maintenant, visitors_count contient le nombre de visiteurs
 
 
 def index(request):
      balance=0
+     visitors_count = cache.get('visitors_count', 0)
+     visitors_count += 1
+     cache.set('visitors_count', visitors_count)
      if request.user.is_superuser:
+        # Dans votre vue
+
         products = Product.objects.all()
         categories = Category.objects.all()
         commandes = Commande.objects.all()
@@ -27,8 +37,6 @@ def index(request):
         
         for com in commandes:
             balance+=float(com.total)  
-
-        
         try:
             cart=get_object_or_404(Cart, user=request.user)
         except:
@@ -66,7 +74,8 @@ def index(request):
          'valeurPanier':valeurPanier,
             'total':total,
             'products':products,
-            'balance':balance
+            'balance':balance,
+            'visitors_count':visitors_count
     
         })
         
@@ -128,9 +137,12 @@ def detail(request, myid):
     
     return render(request, 'shop/detail.html', {'product': product_object}) 
 
+
+
 def login_page(request):
     form = forms.LoginForm()
     message = ''
+    
     if request.method == 'POST':
         form = forms.LoginForm(request.POST)
         if form.is_valid():
@@ -141,11 +153,16 @@ def login_page(request):
             if user is not None:
                 login(request, user)
                 message = f'Bonjour, {user.username}! Vous êtes connecté.'
-                return redirect('home')
+
+                # Redirect to the originally requested URL or home if not available
+                next_url = request.GET.get('next', 'home')
+                return redirect(next_url)
             else:
                 message = 'Identifiants invalides.'
+    
     return render(
         request, 'shop/login.html', context={'form': form, 'message': message})
+
 
 def signup_page(request):
     form = forms.SignupForm()
@@ -161,7 +178,7 @@ def signup_page(request):
 def logout_user(request):
     
     logout(request)
-    return redirect('login')
+    return redirect('home')
 
 def confirmation(request):
     info = Commande.objects.all()[:1]
@@ -195,24 +212,20 @@ def add_to_cart(request, id):
     user = request.user
     product = get_object_or_404(Product, id=id)
     cart, _ = Cart.objects.get_or_create(user=user)
-    order, created = Order.objects.get_or_create(user=user, product=product)
 
-    if created:
-        cart.orders.add(order)
-        cart.save()
-        return HttpResponseRedirect(reverse('detail', args=[id]) + "?added=True")
+    # Check if the product is already in the cart
+    order, created = Order.objects.get_or_create(user=user, product=product, ordered=False)
 
-        
-    else:
+    if not created:
         order.quantity += 1
         order.save()
         return HttpResponseRedirect(reverse('detail', args=[id]) + "?added=False")
 
+    # If the order is created, add it to the cart
+    cart.orders.add(order)
+    cart.save()
 
-    if request.user.is_superuser:
-        return redirect("new_commande")
-    else:
-        return redirect("detail", id)
+    return HttpResponseRedirect(reverse('detail', args=[id]) + "?added=True")
 
 @login_required
 def cart(request):
@@ -222,8 +235,6 @@ def cart(request):
     total = sum(order.product.price * order.quantity for order in orders)
 
     return render(request, 'shop/cart.html', {'orders': orders, 'total': total})
-
-
 
 def delete_cart(request):
     if cart := request.user.cart:
@@ -247,12 +258,15 @@ def checkout(request):
              'total':total,
              }
     if request.method == 'POST':
+        adress=request.POST.get('address')
+        if adress=='':
+            adress=user.adress
         command = Commande(
             prod=items,
             total=total,
             nom=user,
             email=user.email,
-            address=user.adresse,
+            address=adress,
             ville=user.ville,
             pays=user.pays,
             # statut=Commande.traitement  # Définir le statut initial comme "en cours de traitement"
@@ -263,9 +277,7 @@ def checkout(request):
 
         return redirect('confirmation')
 
-    return render(request, 'shop/checkout.html',context)
-
-        
+    return render(request, 'shop/checkout.html',context)    
 
 def CommandeCaisse(request):
     if request.user.is_superuser:
@@ -288,8 +300,6 @@ def CommandeCaisse(request):
     return render(request,'shop/admin/admin.html',{'products':products,
     "orders":orders,'total':total})
 
-
-
 def update_commande_statut(request, commande_id):
     commande = get_object_or_404(Commande, pk=commande_id)
     
@@ -307,6 +317,16 @@ def update_commande_statut(request, commande_id):
         commande.statut = nouveau_statut
         commande.save()
         
-        return redirect('/') 
+        return redirect('home') 
     
     return redirect('/')
+
+def order_details(request, order_id):
+    order = get_object_or_404(Commande, id=order_id)
+    if request.method=='POST':
+        order.STATUT=request.POST.get('statut')
+        order.save()
+        return redirect('home')
+
+    return render(request, 'shop/order_details.html', {'order': order, })
+

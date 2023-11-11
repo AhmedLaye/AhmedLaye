@@ -179,24 +179,25 @@
     <div class="flex flex-col">
         <div class=" sm:mx-0.5 lg:mx-0.5">
           <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-            <div>
-                <h4 class="text-3xl font-bold border-b-4 border-black-500">
-                    Derniers ajouts
-                   
-                </h4>
-    
-            </div>
+
             {% comment %} list products {% endcomment %}
-            <div class="grid lg:grid-cols-5 2xl:grid-cols-6 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-2 space-x-1 md:grid-cols-1 md:mx-auto sm:grid-cols-1 justify-center mx-auto">
-                {% for product in product|slice:":10" reversed %}
+            <div class="mt-5 grid w-9/12 lg:grid-cols-4 2xl:grid-cols-6 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-2 space-x-1 md:grid-cols-1 md:mx-auto sm:grid-cols-1 justify-center mx-auto">
+                <div class="mb-5">
+                    <h4 class="text-3xl py-5 font-bold border-b-2 border-black-500">
+                        Derniers ajouts
+                       
+                    </h4>
+        
+                </div>
+                {% for product in product|slice:":11" %}
                 
                 <div
-                    class="animProduit text-center lg:w-56 w-full md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105    hover:drop-shadow-2xl">
+                    class="animProduit text-center lg:w-56 w-full md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105    hover:drop-shadow-xl">
                     <a href="detail/{{product.id}}">
                         <div
                             class="w-full h-full bg-white content-center shadow-md rounded-lg max-w-sm bg-light dark:border-gray-700">
                             <a href="detail/{{product.id}}">
-                                <img class="rounded-t-lg p-8 lg:w-56 lg:h-56 md:w-56 md:h-56 sm:w-56 xs:w-32 xs:h-32" src="{{product.image.url}}" alt="product image" />
+                                <img class="rounded-t-lg p-8 lg:w-56 lg:h-56 md:w-56 md:h-56 sm:w-56 xs:w-24 xs:h-24" src="{{product.image.url}}" alt="product image" />
                             </a>
                             <div class="px-5 pb-5">
                                 <a href="detail/{{product.id}}">
@@ -232,45 +233,47 @@
     <!-- component -->
 <div class="h-min-screen flex items-center justify-center bg-[#0f766e] mt-5">
 
-    <div class="grid grid-cols-6 gap-x-4 gap-y-1 max-w-2xl">
+    <div class="">
   
       <!-- Title -->
-      <div class="col-span-full mb-3 animProduit">
-        <h4 class="text-5xl  text-white mb-3">
-           Nos Categorie
-        </h4>
+      
+      </div>
+      <div class="flex justify-center items-center">
+        <div class="2xl:mx-auto 2xl:container py-12 px-4 sm:px-6 xl:px-20 2xl:px-0 w-full">
+          <div class="flex flex-col jusitfy-center items-center space-y-10">
+            <div class="flex flex-col justify-center items-center ">
+              <h1 class="text-3xl xl:text-4xl font-semibold leading-7 xl:leading-9 text-gray-800 dark:text-white">Shop By Category</h1>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-x-4 md:gap-x-8 w-full">
+              {% for cat in categorie %}
+                <div class="relative group flex justify-center items-center h-full w-full">
+                  <img class="object-center object-cover h-full w-full" src="{{ cat.image.url }}" alt="{{ cat.name }}-image" />
+                  <a href="{{ cat.link }}" class="text-center dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white">{{ cat.name }}</a>
+                  <div class="absolute opacity-0 group-hover:opacity-100 transition duration-500 bottom-3 py-6 z-0 px-20 w-36 bg-white bg-opacity-50"></div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
       </div>
       
-      {% for cat in categorie %}
-      <!-- Card 1 -->
-      <div class="col-span-2">
-        <a href="{% url 'categorie' cat.id %}">
-          <img src="{{ cat.image.url }}" class="rounded-xl brightness-75" />
-        </a>
-        <p class="text-xs -translate-y-6 text-white font-semibold sm:-translate-y-8 sm:text-base translate-x-3"> {{cat.name}} </p>
-      </div>
-      {% endfor %}
-      <!-- Card 2 -->
+      
      
-  
     </div>
   
-  </div>
-    </div>
-<br>
-  
-   <br>
-  
+</div>
+    
+
     <div class="flex flex-col">
         <div class=" sm:mx-0.5 lg:mx-0.5">
           <div class="py-5  inline-block min-w-full sm:px-6 lg:px-8">
     {% for key, values in my_dict.items %}
                    
-    <div class="">
+    <div class="m-10">
         <button class="group relative  overflow-hidden rounded-lg bg-white text-lg shadow-lg">
             <div class="absolute inset-0 w-3 bg-[#045757] transition-all duration-[250ms] ease-out group-hover:w-full"></div>
             <span class="relative text-black group-hover:text-white"> <h4 class="  py-3">
-                <a href="categorie/{{key.id}}" class="lg:text-4xl sm:text-xl font-normal mx-5 leading-tight">
+                <a href="categorie/{{key.id}}" class="lg:text-2xl sm:text-xl font-normal mx-5 leading-tight">
                     {{key}} </a>
         </h4></span>
         
@@ -280,11 +283,11 @@
 
     </div>
     {% comment %} list products {% endcomment %}
-    <div class="py-6 grid lg:grid-cols-5 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-1 space-x-1 md:grid-cols-3 md:mx-auto sm:grid-cols-3 justify-center mx-auto">
+    <div class="grid lg:grid-cols-5 2xl:grid-cols-6 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-2 space-x-1 md:grid-cols-1 md:mx-auto sm:grid-cols-1 justify-center mx-auto">
         {% for product in values|slice:":5" %}
         <!-- animProduit -->
         <div
-            class=" animProduit text-center lg:w-56 w-32 md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105  hover:drop-shadow-2xl">
+            class=" animProduit text-center lg:w-56 w-32 md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105 mb-5 hover:drop-shadow-2xl">
             <a href="detail/{{product.id}}">
                 <div
                     class="w-full h-full bg-white content-center shadow-md rounded-lg max-w-sm bg-light dark:border-gray-700">

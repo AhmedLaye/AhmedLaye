@@ -306,128 +306,156 @@
 
         <div class="h-full ml-14 mt-14 mb-10 md:ml-64">
 
-            <!-- Statistics Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 p-4 gap-3">
-                <div
-                    class="bg-blue-500 dark:bg-gray-200 shadow-lg rounded-md flex items-center justify-between p-3 border-b-4   text-black font-medium group hover:bg-[#f472b6]">
-                    <div
-                        class="flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12">
-                        <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
-                            </path>
-                        </svg>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-2xl">{{visitors_count}}</p>
-                        <p>Visitors</p>
-                    </div>
-                </div>
-                <div
-                    class="bg-blue-500 dark:bg-gray-200 shadow-lg rounded-md flex items-center justify-between p-3 border-b-4   text-black font-medium group  hover:bg-[#f472b6]" >
-                    <div
-                        class="flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12">
-                        <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                        </svg>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-2xl">{{totalCommande}}</p>
-                        <p>Commandes</p>
-                        <a href="{% url 'new_commande' %}">Ajouter</a>
-                    </div>
-                </div>
-               
-                <div
-                    class="bg-blue-500 dark:bg-gray-200 shadow-lg rounded-md flex items-center justify-between p-3 border-b-4   text-black font-medium group  hover:bg-[#f472b6]">
-                    <div
-                        class="flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12">
-                        <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                            </path>
-                        </svg>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-2xl">{{balance}} cfa</p>
-                        <p>Balances</p>
-                    </div>
-                </div>
-            </div>
-            <!-- ./Statistics Cards -->
+           
 
-            <div class="grid grid-cols-1 lg:grid-cols-1 p-4 gap-1">
-                  <!-- Client Table -->
-                  <table class="w-full">
-                    <thead>
-                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-black dark:bg-gray-200">
-                            <th class="px-4 py-3">Commande</th>
-                            <th class="px-4 py-3">Cient</th>
-                            <th class="px-4 py-3">Total</th>
-                            <th class="px-4 py-3">Status</th>
-                            <th class="px-4 py-3">Date</th>
-                            <th class="px-4 py-3">Action</th> <!-- Ajouter cette colonne pour les boutons d'action -->
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-300">
-                        {% for commande in commandes %}
-                        <tr class="bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-[#7dd3fc] text-gray-700 dark:text-black">
-                            
-                            <td class="px-4 py-3">
-                                <div class="flex items-center text-sm">
-                                    <div>
-                                        <a href="{% url 'order_details' commande.id %}">
-                                        <p class="font-semibold">{{ commande.prod }}</p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </td>
-                           
-                            <td class="px-4 py-3 text-sm">{{ commande.nom.first_name }} {{ commande.nom.last_name }}</td>
-                            <td class="px-4 py-3 text-sm">{{ commande.total }}</td>
-                            <form method="post" action="{% url 'update_commande_statut' commande.id %}">
-                            <td class="px-4 py-3 text-xs">
-   
-                            {% csrf_token %}
-                            <select name="statut" class="px-2 py-1 font-semibold leading-tight rounded-full
-                                {% if commande.statut == 'en cours de traitement' %}
-                                    text-white bg-[#0891b2]
-                                {% elif commande.statut == 'traitement fini' %}
-                                    text-white bg-[#16a34a]
-                                {% elif commande.statut == 'livraison en cours' %}
-                                    text-white bg-[#db2777]
-                                {% elif commande.statut == 'livré' %}
-                                    text-white bg-[#65a30d]
-                                {% endif %}">
-                                {% for value, label in commande.STATUT %}
-                                    {% if value == commande.statut %}
-                                        <option value="{{ value }}" selected>{{ label }}</option>
-                                    {% else %}
-                                        <option value="{{ value }}">{{ label }}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                           
-                            </td>
-
-                            <td class="px-4 py-3 text-sm">{{commande.date_commande}}</td>
-                             <td class="px-4 py-3 text-sm">
-                               
-                                 <button type="submit" class="px-2 py-1 font-semibold leading-tight text-white rounded-full bg-gray-600">Confirmer</button>
-                            </td>
-                        </form>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
+          <div class="sm:container md:container mx-auto 2xl:mx-auto xl:container 2xl:container lg:container">
+            <div class="flex flex-col md:flex-row gap-4 m-10">
+                <div id="item-list" class="w-full md:w-1/2 md:order-2">
+                    <table class="table-auto w-full">
+                        <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+                            <tr>
+                                <th></th>
+                                <th class="p-2">
+                                    <div class="font-semibold text-left">Product Name</div>
+                                </th>
+                                
+                            </tr>
+                        </thead>
+        
+                        <tbody class="text-sm divide-y divide-gray-100">
+                          
+                              <!-- Votre code pour afficher chaque produit de la commande ici -->
+                              <tr class="{% cycle 'bg-white' 'bg-gray-100' %}">
+                                  
+                                  <td class="p-2">
+                                      <div class="text-xl text-gray-800">
+                                          {{ order.prod }}
+                                      </div>
+                                  </td>
+                                  <!-- ... autres colonnes ... -->
+                              </tr>
+                          
+                      </tbody>
+                      
+                      
+                    </table>
+                </div>
+                <div class=" md:w-1/2 md:order-1 bg-white">
+                    <div class="m-3">
+                        <h3 class="font-semibold text-2xl text-gray-800">Detail de Commande </h3>
+                        <p class="text-gray-500">Remplissez leformulaire pour envoyer votre commande .</p>
+                    </div>
                     
-                </table>
-                
-            <!-- ./Client Table -->
+                    <div class=" justify-center space-x-2">
+                        <form class="ms-5 max-w-lg" method="POST">
+                            {% csrf_token %}
+                            <div class="flex flex-wrap  mb-4">
+                        
+                        
+                                <input id="items" name="items" type="hidden">
+                        
+                                <div class="w-full md:w-1/2  mb-6 md:mb-0">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                                        Name: {{ order.nom.first_name}} {{ order.nom.last_name}}
+                                    </label>
+                                    <input type="hidden" id="nom" name="nom"
+                                        class="appearance-none block w-full bg-gray-100 text-gray-700 rounded py-3 px-4 mb-3 border border-gray-200 leading-tight focus:outline-none focus:bg-white focus:border-teal-300"
+                                            >
+                                </div>
+                        
+                        
+                            </div>
+                            <div class="flex flex-wrap -mx-3 mb-4">
+                                <div class="w-full px-3">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
+                                        Email: {{order.nom.email}}
+                                    </label>
+                                    <input type="hidden" id="email" name="email" value="{{ user.email }}"
+                                        class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-teal-300"
+                                            placeholder="joe@gmail.com">
+                        
+                                </div>
+                            </div>
+                        
+                            <div class="flex flex-wrap -mx-3 mb-4">
+                                <div class="w-full px-3">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-adresse">
+                                        Adresse de Livraison : {{user.adress}}
+                                    </label>
+                                    <input type="text" id="address" name="address"
+                                        class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-teal-300"
+                                            type="text" placeholder="Dakar">
+                        
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap -mx-3 mb-4">
+                                
+                                <!-- <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip"
+                                        >
+                                        Zip
+                                    </label>
+                                    <input name="zipcode" id="zipcode"
+                                        class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-teal-300"
+                                            type="inputZip" placeholder="00000" name="zipcode">
+                                </div> -->
+                                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-total">
+                                        Total à Payer
+                                    </label>
+                                    <input
+                                        class=" block w-full bg-gray-900 text-yellow-400 text-xl border border-gray-200 rounded py-3 px-4 leading-tight     "
+                                        id="total" type="readonly" name="total" value="{{order.total}}">
+                                </div>
+                            </div>
+                            <div class="space-y-6 mt-6">
+                              <form method="post" action="{% url 'update_commande_statut' order.id %}">
+                                <td class="px-4 py-3 text-xs">
+       
+                                {% csrf_token %}
+                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-total">
+                                  Statut
+                              </label>
+                                <select name="statut" class="px-2 py-1 font-semibold leading-tight rounded-full
+                                    {% if order.statut == 'en cours de traitement' %}
+                                        text-white bg-[#0891b2]
+                                    {% elif order.statut == 'traitement fini' %}
+                                        text-white bg-[#16a34a]
+                                    {% elif order.statut == 'livraison en cours' %}
+                                        text-white bg-[#db2777]
+                                    {% elif order.statut == 'livré' %}
+                                        text-white bg-[#65a30d]
+                                    {% endif %}">
+                                    {% for value, label in order.STATUT %}
+                                        {% if value == order.statut %}
+                                            <option value="{{ value }}" selected>{{ label }}</option>
+                                        {% else %}
+                                            <option value="{{ value }}">{{ label }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                               
+                                </td>
+    
+                                <td class="px-4 py-3 text-sm">{{commande.date_commande}}</td>
+                                 <td class="px-4 py-3 text-sm">
+            
+                                  <button type="submit"
+                                  class="w-full flex justify-center bg-pink-400  hover:bg-pink-500 text-gray-100 p-3  rounded-full tracking-wide font-semibold  shadow-lg cursor-pointer transition ease-in duration-500">
+                                 appliquer
+                              </button>
+                                </td>
+                                <div>
+                                 
+                              </div>
+                            </form>
+                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
+        </div>
         </div>
     
     </div>
