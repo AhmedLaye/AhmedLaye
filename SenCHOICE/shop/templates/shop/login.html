@@ -52,8 +52,9 @@ form input{
 }
 
 </style>
-<div class="flex flex-col items-center justify-center min-h-screen bg-center bg-cover "
-    style="background-image: url(https://img.freepik.com/photos-gratuite/sacs-provisions-portables-concept-magasinage-ligne_1423-189.jpg?w=2000&t=st=1666097164~exp=1666097764~hmac=d19af1cd56d28b65ad7fd06f5617b0e7e24c362873ce26bf138209d56edb8ba2)">
+
+<div class="flex flex-col items-center justify-center min-h-screen bg-center bg-cover"
+    style="background-image: url({% static 'img/bg.png' %})">
     <div class="position-absolute top-0 start-0 bg-light">
         <div>
             <a href="/">
@@ -63,16 +64,17 @@ form input{
     </div>
 
     <div class="">
-
+        
         <h1 class="text-6xl xs:text-sm font-bold text-white pt-1 text-center">Senchoice</h1>
         <span class="pt-0 mt-0 text-dark " style="letter-spacing: 6px;">Votre satisfactions, notre priorité </span>
+       
         <div class="absolute bg-blue-100 opacity-0 inset-0 z-0"></div>
     </div>
-
+   
     <div class="max-w-md w-full h-full mx-auto z-10  rounded-3xl">
         <div class="flex flex-col w-full rounded items-center justify-center"
             style="background-color:rgba(236, 233, 230, 0.45) ;">
-
+            <a href="/">Retournez à l'acceuil </a>
             <p>{{ message }}</p>
             <form method="post" class="w-all items-center justify-center">
                 {{ form.as_p }}

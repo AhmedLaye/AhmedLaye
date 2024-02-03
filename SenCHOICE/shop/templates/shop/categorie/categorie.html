@@ -32,10 +32,10 @@
 </section>
 
 <section class="mt-20 pt-20 relative 2xl:container lg:container lg:mx-auto w-full flex items-center justify-center ">
-        <div class="grid lg:grid-cols-5 gap-4 grid-cols-2 space-x-1 md:grid-cols-3">
+        <div class="grid lg:grid-cols-4 gap-4 grid-cols-2 space-x-1 md:grid-cols-3">
             {% for product in procat %}
             <div
-                class="text-center lg:w-56 w-32 md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105    hover:drop-shadow-2xl">
+                class="animProduit text-center lg:w-56 w-full md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105    hover:drop-shadow-xlç">
                 <a href="detail/{{product.id}}">
                     <div class="w-full h-full bg-white content-center shadow-md rounded-lg max-w-sm bg-light dark:border-gray-700">
                         <a href="{% url 'home' %}detail/{{product.id}}">

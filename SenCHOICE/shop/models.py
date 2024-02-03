@@ -17,7 +17,10 @@ class User(AbstractUser):
     adresse=models.CharField(null=True, max_length=100)
     pays=models.CharField(null=True, max_length=100)
     ville=models.CharField(null=True, max_length=100)
-   
+    telephone=models.IntegerField(null=True)
+
+    USERNAME_FIELD = 'username'  # Update the USERNAME_FIELD
+    REQUIRED_FIELDS = ['email']
 class Category(models.Model):
     name = models.CharField(max_length=200)
     date_added = models.DateTimeField(auto_now=True)
@@ -30,10 +33,23 @@ class Category(models.Model):
 
 class Slider(models.Model):
     image=models.ImageField(upload_to="image_slider", null=True, blank=True)
-   
+
     
     def __str__(self):
         return "image"
+
+
+class deal(models.Model):
+    titre=models.CharField(max_length=100, null=True)
+    image1=models.ImageField(upload_to="images_promo")
+    image2=models.ImageField(upload_to="images_promo")
+    image3=models.ImageField(upload_to="images_promo")
+    discount=models.IntegerField()
+
+    def __str__(self) :
+        return (f"{self.titre()} {self.discount}%")
+
+
 
 class Product(models.Model):
     title = models.CharField(max_length=200)
@@ -96,8 +112,6 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.product.title} ({self.quantity})"
-
-
 
 
 

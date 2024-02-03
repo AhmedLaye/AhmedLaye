@@ -7,7 +7,7 @@
 <div class="2xl:mx-auto 2xl:container m-auto w-11/12 mb-20">
     {% if request.user.is_authenticated %}
     <div class="sm:container md:container mx-auto 2xl:mx-auto xl:container 2xl:container lg:container">
-        <div class="flex flex-col md:flex-row gap-4 ">
+        <div class="flex flex-col md:flex-row gap-4 mt-5">
             <div id="item-list" class="w-full md:w-1/2 md:order-2">
                 <table class="table-auto w-full">
                     <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
@@ -85,7 +85,7 @@
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
                                     Name: {{ request.user.username}}
                                 </label>
-                                <input type="hidden" id="nom" name="nom"
+                                <input {% if  request.user.username %}type="hidden"{% endif %}  id="nom" name="nom"
                                     class="appearance-none block w-full bg-gray-100 text-gray-700 rounded py-3 px-4 mb-3 border border-gray-200 leading-tight focus:outline-none focus:bg-white focus:border-teal-300"
                                         >
                             </div>
@@ -97,7 +97,7 @@
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
                                     Email: {{user.email}}
                                 </label>
-                                <input type="hidden" id="email" name="email" value="{{ user.email }}"
+                                <input  {% if request.user.email %}type="hidden"{% endif %} type="hidden" id="email" name="email" value="{{ user.email }}"
                                     class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-teal-300"
                                         placeholder="joe@gmail.com">
                     
@@ -109,9 +109,9 @@
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-adresse">
                                     Adresse livraison : {{user.adresse}}
                                 </label>
-                                <input type="text" id="address" name="address"
+                                <input  type="text" id="address" name="address"
                                     class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-teal-300"
-                                        type="text" placeholder="Dakar">
+                                        type="text" placeholder="L'adresse où vous voulez qu'on vous livre">
                     
                             </div>
                         </div>

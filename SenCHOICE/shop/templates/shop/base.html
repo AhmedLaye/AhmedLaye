@@ -32,6 +32,11 @@
     {% tailwind_css %}
 
 </head>
+<style>
+     html {
+    scroll-behavior: smooth;
+}
+</style>
 <body>
     <!-- header -->
     <header class="sticky top-0 z-50 bg-white shadow-sm" >
@@ -91,7 +96,7 @@
                     </a>
                     <div class="ml-1 hidden sm:flex flex-col font-bold">
                         <span class="text-xs text-gray-400"><a href="{% url 'logout' %}">Deconnection</a></span>
-                        <span>{{user.first_name}}</span>
+                        <span>{{user.username}}</span>
                     </div>
                 </li>
                 {% else %}
@@ -227,31 +232,46 @@
 
 {% endblock js %}
  <!-- button -->
- <button x-data="topBtn" @click="scrolltoTop" id="topButton"
- class="fixed z-10 hidden p-3 bg-gray-100 rounded-full shadow-md bottom-10 right-10 animate-bounce">
- <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-     xmlns="http://www.w3.org/2000/svg">
-     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18">
-     </path>
- </svg>
+ <button x-data="{ scrolltoTop: function() { scrollToTopAnimated(); } }" @click="scrolltoTop" id="topButton" class="fixed z-10 hidden p-3 bg-gray-100 rounded-full shadow-md bottom-10 right-10 animate-bounce">
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+    </svg>
 </button>
 
 <script>
- document.addEventListener('alpine:init', () => {
-     Alpine.data('topBtn', () => ({
-         scrolltoTop() {
-             document.body.scrollTop = 0;
-             document.documentElement.scrollTop = 0;
-         }
-     }));
- });
+    const topBtn = document.getElementById("topButton");
+    window.onscroll = () => {
+        (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ?
+        topBtn.classList.remove("hidden"): topBtn.classList.add("hidden");
+    }
 
- const topBtn = document.getElementById("topButton");
- window.onscroll = () => {
-     (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ?
-     topBtn.classList.remove("hidden"): topBtn.classList.add("hidden");
+    ScrollReveal().reveal('.animProduit', { interval: 100, viewFactor: 0.5, reset:false, mobile: false, distance: '20px' });
 
- }
- ScrollReveal().reveal('.animProduit', { interval: 100, viewFactor: 0.5, mobile: false, distance: '20px'  });
+    function scrollToTopAnimated() {
+        const startPosition = document.documentElement.scrollTop || document.body.scrollTop;
+        const startTime = performance.now();
+        const duration = 500; // Ajustez la durée selon votre préférence
+
+        function scrollStep() {
+            const currentTime = performance.now();
+            const elapsedTime = currentTime - startTime;
+
+            window.scrollTo(0, easeInOut(elapsedTime, startPosition, -startPosition, duration));
+
+            if (elapsedTime < duration) {
+                requestAnimationFrame(scrollStep);
+            }
+        }
+
+        function easeInOut(t, b, c, d) {
+            // Fonction d'interpolation pour un mouvement fluide
+            t /= d / 2;
+            if (t < 1) return c / 2 * t * t + b;
+            t--;
+            return -c / 2 * (t * (t - 2) - 1) + b;
+        }
+
+        requestAnimationFrame(scrollStep);
+    }
 </script>
 </html>

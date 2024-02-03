@@ -70,7 +70,7 @@
                     </a>
                 </div>
                 <div class="flex group">
-                    <a href="#" class="p-3 text-black hover:text-yellow-500">
+                    <a href="#flash" class="p-3 text-black hover:text-yellow-500">
                         <span class="flex  items-center">
                             <div class="">
                                 <svg class="h-7 lg:h-8 p-2  mx-1 text-black group-hover:text-gray-700
@@ -181,7 +181,7 @@
           <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
 
             {% comment %} list products {% endcomment %}
-            <div class="mt-5 grid w-9/12 lg:grid-cols-4 2xl:grid-cols-6 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-2 space-x-1 md:grid-cols-1 md:mx-auto sm:grid-cols-1 justify-center mx-auto">
+            <div class="mt-5 grid w-9/12 lg:grid-cols-3 2xl:grid-cols-6 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-2 space-x-1 md:grid-cols-1 md:mx-auto sm:grid-cols-1 justify-center mx-auto">
                 <div class="mb-5">
                     <h4 class="text-3xl py-5 font-bold border-b-2 border-black-500">
                         Derniers ajouts
@@ -192,7 +192,7 @@
                 {% for product in product|slice:":11" %}
                 
                 <div
-                    class="animProduit text-center lg:w-56 w-full md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105    hover:drop-shadow-xl">
+                    class="animProduit text-center lg:w-56 w-full md:w-32 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105    hover:drop-shadow-xl">
                     <a href="detail/{{product.id}}">
                         <div
                             class="w-full h-full bg-white content-center shadow-md rounded-lg max-w-sm bg-light dark:border-gray-700">
@@ -202,7 +202,7 @@
                             <div class="px-5 pb-5">
                                 <a href="detail/{{product.id}}">
                                     <h3 id="aa{{ product.id }}"
-                                        class="text-gray-900 font-semibold lg:text-lg text-sm tracking-tight text-dark truncate">
+                                        class="text-gray-900 font-semibold lg:text-lg text-sm tracking-tight text-dark truncate text-left">
                                         {{product.title}}
                                     </h3>
                                 </a>
@@ -230,12 +230,12 @@
         </div>
     </div>
         
-    <!-- component -->
-<div class="h-min-screen flex items-center justify-center bg-[#0f766e] mt-5">
+ 
+<div id="categorie" class="h-min-screen flex items-center justify-center bg-[#0f766e] mt-5">
 
     <div class="">
   
-      <!-- Title -->
+      <!-- produit par categorie -->
       
       </div>
       <div class="flex justify-center items-center">
@@ -248,7 +248,7 @@
               {% for cat in categorie %}
                 <div class="relative group flex justify-center items-center h-full w-full">
                   <img class="object-center object-cover h-full w-full" src="{{ cat.image.url }}" alt="{{ cat.name }}-image" />
-                  <a href="{{ cat.link }}" class="text-center dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white">{{ cat.name }}</a>
+                  <a href="{% url 'categorie' cat.id %}" class="text-center dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white">{{ cat.name }}</a>
                   <div class="absolute opacity-0 group-hover:opacity-100 transition duration-500 bottom-3 py-6 z-0 px-20 w-36 bg-white bg-opacity-50"></div>
                 </div>
               {% endfor %}
@@ -283,11 +283,11 @@
 
     </div>
     {% comment %} list products {% endcomment %}
-    <div class="grid lg:grid-cols-5 2xl:grid-cols-6 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-2 space-x-1 md:grid-cols-1 md:mx-auto sm:grid-cols-1 justify-center mx-auto">
+    <div class="mx-10 grid lg:grid-cols-4 2xl:grid-cols-6 lg:space-x-2 gap-4 grid-cols-2 sm:grid-cols-2  space-x-1 md:grid-cols-1 md:mx-auto sm:grid-cols-1 justify-center mx-auto">
         {% for product in values|slice:":5" %}
         <!-- animProduit -->
         <div
-            class=" animProduit text-center lg:w-56 w-32 md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105 mb-5 hover:drop-shadow-2xl">
+            class=" animProduit text-center lg:w-56 w-full md:w-56 mx-auto cursor-pointer rounded-3xl bg-gray-100 transition duration-300 ease-in-out hover:scale-105    hover:drop-shadow-xl">
             <a href="detail/{{product.id}}">
                 <div
                     class="w-full h-full bg-white content-center shadow-md rounded-lg max-w-sm bg-light dark:border-gray-700">
@@ -297,7 +297,7 @@
                     <div class="px-5 pb-5">
                         <a href="detail/{{product.id}}">
                             <h3 id="aa{{ product.id }}"
-                                class="text-gray-900 font-semibold lg:text-lg text-sm tracking-tight text-dark truncate">
+                                class="text-gray-900 font-semibold lg:text-lg text-sm tracking-tight text-dark truncate text-left">
                                 {{product.title}}
                             </h3>
                         </a>
@@ -315,12 +315,56 @@
                 </div>
             </a>
         </div>
+        
         {%endfor %}
     </div>
     {% endfor %}
-          </div></div></div>
+          </div></div>
+    </div>
+
+<!-- Promotion -->
+<div class="py-16 bg-white" id="flash">
+    <div  class="container m-auto px-6 space-y-8 text-gray-500 md:px-12 lg:px-20">
+        {% if not promo %}
+        <h1 class="text-4xl text-gray-700 font-bold md:text-5xl">Les promos arrivents bientôt !</h1>
+        {% endif %}
+        {% for pr in promo %}
+        <div class="justify-center text-center gap-6 md:text-left md:flex lg:items-center  lg:gap-16">
+            <div class="order-last mb-6 space-y-6 md:mb-0 md:w-6/12 lg:w-6/12">
+                <h1 class="text-4xl text-gray-700 font-bold md:text-5xl">Buy now and benefit up to <span class="text-blue-500">30% off</span></h1>
+                <p class="text-lg">Be part of millions people around the world using tailus in modern User Interfaces.</p>
+                <div class="flex flex-row-reverse flex-wrap justify-center gap-4 md:gap-6 md:justify-end">
+                    <button type="button" title="Start buying" class="w-full py-3 px-6 text-center rounded-xl transition bg-gray-700 shadow-xl hover:bg-gray-600 active:bg-gray-700 focus:bg-gray-600 sm:w-max">
+                        <span class="block text-white font-semibold">
+                            Start buying
+                        </span>
+                    </button>
+                    <button type="button" title="more about" class="w-full order-first py-3 px-6 text-center rounded-xl bg-gray-100 transition hover:bg-gray-200 active:bg-gray-300 focus:bg-gray-200 sm:w-max">
+                        <span class="block text-gray-600 font-semibold">
+                            More about
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="grid grid-cols-5 grid-rows-4 gap-4 md:w-5/12 lg:w-6/12">
+                <div class="col-span-2 row-span-4">
+                    <img src="https://tailus.io/sources/blocks/ecommerce-site/preview/images/products/kushagra.webp" class="rounded-full" width="640" height="960" alt="shoes" loading="lazy">
+                </div>
+                <div class="col-span-2 row-span-2">
+                    <img src="https://tailus.io/sources/blocks/ecommerce-site/preview/images/products/iman.webp" class="w-full h-full object-cover object-top rounded-xl" width="640" height="640" alt="shoe" loading="lazy">
+                </div>
+                <div class="col-span-3 row-span-3">
+                    <img src="https://tailus.io/sources/blocks/ecommerce-site/preview/images/products/daniel.webp" class="w-full h-full object-cover object-top rounded-xl" width="640" height="427" alt="shoes" loading="lazy">
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
 </section>
-{{list_of_row}}
    
     
 
